@@ -116,8 +116,8 @@ Supporting files should have clear roles.
 
 | Directory | Role | Typical contents |
 |-----------|------|------------------|
-| `reference/` | knowledge | standards, formulas, policies, schemas |
-| `templates/` | standardized output | reports, code skeletons, review formats |
+| `references/` | knowledge | standards, formulas, policies, schemas |
+| `assets/` | standardized output | reports, code skeletons, review formats |
 | `scripts/` | deterministic actions | validators, converters, generators |
 | `examples/` | worked examples | sample inputs and outputs |
 | `data/` | static lookup data | JSON, CSV, benchmark tables |
@@ -141,13 +141,13 @@ Supporting files should have clear roles.
 
 Prefer names like these:
 
-- `reference/progressive_disclosure.md`
-- `templates/evaluation_report.md`
+- `references/progressive_disclosure.md`
+- `assets/evaluation_report.md`
 - `scripts/analyze_skill.py`
 
 Avoid names like these:
 
-- `reference/ref1.md`
+- `references/ref1.md`
 - `docs/misc.md`
 - `file.md`
 
@@ -156,8 +156,8 @@ Avoid names like these:
 ### If the Skill has no real layer separation
 
 - Keep routing logic in `SKILL.md`
-- Move standards and examples into `reference/`
-- Move reusable report formats into `templates/`
+- Move standards and examples into `references/`
+- Move reusable report formats into `assets/`
 - Move deterministic checks into `scripts/`
 
 ### If the main file is too long

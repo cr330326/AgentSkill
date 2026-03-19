@@ -24,9 +24,9 @@ description: Review API design documents, score interface quality, and recommend
 
 | If the user needs... | Then use | Why |
 |----------------------|----------|-----|
-| Endpoint and resource design review | `reference/interface_design.md` | Review naming, consistency, and resource modeling |
-| Schema and payload review | `reference/schema_quality.md` | Review request and response structures |
-| Formal review output | `templates/review_report.md` | Keep scoring and recommendations consistent |
+| Endpoint and resource design review | `references/interface_design.md` | Review naming, consistency, and resource modeling |
+| Schema and payload review | `references/schema_quality.md` | Review request and response structures |
+| Formal review output | `assets/review_report.md` | Keep scoring and recommendations consistent |
 | Repeatable checks | `scripts/check_api_doc.py` | Gather deterministic baseline signals |
 
 ## Default Workflow
@@ -39,13 +39,13 @@ description: Review API design documents, score interface quality, and recommend
 ## Contract References
 
 When the user asks whether endpoints are modeled clearly:
--> Load `reference/interface_design.md` for resource-modeling criteria and naming checks.
+-> Load `references/interface_design.md` for resource-modeling criteria and naming checks.
 
 When the user asks whether request or response structures are well designed:
--> Load `reference/schema_quality.md` for schema rules, anti-patterns, and rewrite examples.
+-> Load `references/schema_quality.md` for schema rules, anti-patterns, and rewrite examples.
 
 When the user wants a formal scorecard:
--> Use `templates/review_report.md` for structured output.
+-> Use `assets/review_report.md` for structured output.
 ```
 
 ## Why This Is Good
@@ -64,8 +64,8 @@ When the user wants a formal scorecard:
 
 ### Layer 3 Success: supporting files have clear jobs
 
-- `reference/` owns domain rules.
-- `templates/` owns output shape.
+- `references/` owns domain rules.
+- `assets/` owns output shape.
 - `scripts/` owns deterministic checks.
 - File names are descriptive.
 

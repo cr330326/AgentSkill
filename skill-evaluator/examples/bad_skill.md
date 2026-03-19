@@ -36,9 +36,9 @@ You are an expert in product, strategy, writing, planning, execution, research, 
 
 ## References
 
-See `reference/ref1.md` for more details.
-See `reference/ref2.md` for more details.
-See `reference/ref3.md` for more details.
+See `references/ref1.md` for more details.
+See `references/ref2.md` for more details.
+See `references/ref3.md` for more details.
 
 ## Workflow
 

@@ -33,9 +33,10 @@ GENERIC_NAMES = {
 	"ref",
 }
 
-RESOURCE_DIRS = ["reference", "references", "templates", "scripts", "examples", "data"]
+RESOURCE_DIRS = ["reference", "references", "templates", "assets", "scripts", "examples", "data"]
+OUTPUT_RESOURCE_PREFIXES = ("templates/", "assets/")
 RESOURCE_REF_RE = re.compile(
-	r"`((?:reference|references|templates|scripts|examples|data)/[^`]+)`"
+	r"`((?:reference|references|templates|assets|scripts|examples|data)/[^`]+)`"
 )
 ROUTE_LOAD_RE = re.compile(r"(?:->|→)\s*Load\s*`([^`]+)`")
 TABLE_LINE_RE = re.compile(r"^\|.*\|\s*$")
@@ -385,14 +386,14 @@ def score_progressive(metrics: dict[str, Any]) -> tuple[int, list[str], list[str
 	else:
 		recommendations.append("Add on-demand resources or simplify scope so the Skill remains efficient.")
 
-	if metrics["has_script_reference"] and metrics["has_template_reference"]:
+	if metrics["has_script_reference"] and metrics["has_output_template_reference"]:
 		score += 6
-		strengths.append("Scripts and templates are both part of the operating model")
-	elif metrics["has_script_reference"] or metrics["has_template_reference"]:
+		strengths.append("Scripts and output templates are both part of the operating model")
+	elif metrics["has_script_reference"] or metrics["has_output_template_reference"]:
 		score += 3
-		recommendations.append("Use both scripts and templates when the task benefits from deterministic checks and standardized output.")
+		recommendations.append("Use both scripts and output templates when the task benefits from deterministic checks and standardized output.")
 	else:
-		recommendations.append("Consider whether scripts or templates could remove deterministic or repetitive logic from SKILL.md.")
+		recommendations.append("Consider whether scripts or output templates could remove deterministic or repetitive logic from SKILL.md.")
 
 	if metrics["tool_risks"]:
 		recommendations.append("Reduce allowed-tools to the minimum needed for the Skill's job.")
@@ -450,7 +451,7 @@ def build_metrics(skill_root: Path, skill_md: Path) -> dict[str, Any]:
 		"support_dir_count": len(supporting_files),
 		"missing_references": find_missing_references(skill_root, references),
 		"generic_files": find_generic_names(supporting_files),
-		"has_template_reference": any(ref.startswith("templates/") for ref in references),
+		"has_output_template_reference": any(ref.startswith(OUTPUT_RESOURCE_PREFIXES) for ref in references),
 		"has_script_reference": any(ref.startswith("scripts/") for ref in references),
 		"allowed_tools": tool_info["tools"],
 		"tool_risks": tool_info["risky_notes"],

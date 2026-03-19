@@ -19,9 +19,9 @@ A strong Skill behaves like a router, not a handbook:
 
 | If the user needs... | Then use | Why |
 |----------------------|----------|-----|
-| Overall architecture review | `reference/structure_standards.md` | Score the three-layer design, routing role, naming, and directory structure |
-| Instruction and writing quality review | `reference/content_quality.md` | Judge trigger clarity, routing table quality, workflow clarity, and recommendation quality |
-| Token efficiency or file-splitting review | `reference/progressive_disclosure.md` | Judge knowledge ROI, contract references, file splitting, and script/template fit |
+| Overall architecture review | `references/structure_standards.md` | Score the three-layer design, routing role, naming, and directory structure |
+| Instruction and writing quality review | `references/content_quality.md` | Judge trigger clarity, routing table quality, workflow clarity, and recommendation quality |
+| Token efficiency or file-splitting review | `references/progressive_disclosure.md` | Judge knowledge ROI, contract references, file splitting, and script/output-template fit |
 | Calibration examples or before/after comparison | `examples/good_skill.md` and `examples/bad_skill.md` | Anchor the review with concrete contrastive examples |
 | Repeatable baseline checks | `scripts/analyze_skill.py` | Collect deterministic signals before qualitative review |
 | Formal scorecard output | `assets/evaluation_report.md` | Keep the evaluation report structured and comparable |
@@ -45,9 +45,9 @@ Use the script output as evidence, not as the final judgment.
 
 ### Step 3: Load Only the Needed Standards
 
-- Structure question -> load `reference/structure_standards.md`
-- Writing and routing quality question -> load `reference/content_quality.md`
-- Progressive disclosure, token economy, or file-splitting question -> load `reference/progressive_disclosure.md`
+- Structure question -> load `references/structure_standards.md`
+- Writing and routing quality question -> load `references/content_quality.md`
+- Progressive disclosure, token economy, or file-splitting question -> load `references/progressive_disclosure.md`
 
 ### Step 4: Score and Explain
 
@@ -65,17 +65,17 @@ When the user wants a formal review, use `assets/evaluation_report.md`.
 ### Structure and Layer Design
 
 When the user asks whether a Skill has a sound three-layer architecture, a proper directory layout, descriptive filenames, or a main file that actually routes work:
--> Load `reference/structure_standards.md` for layer-by-layer criteria, scoring anchors, red flags, and refactor patterns.
+-> Load `references/structure_standards.md` for layer-by-layer criteria, scoring anchors, red flags, and refactor patterns.
 
 ### Content and Instruction Quality
 
 When the user asks whether the `description` is specific, the routing table is useful, the instructions are clear, or the recommendations are actionable:
--> Load `reference/content_quality.md` for trigger-quality checks, routing-quality checks, contract-reference standards, and rewrite examples.
+-> Load `references/content_quality.md` for trigger-quality checks, routing-quality checks, contract-reference standards, and rewrite examples.
 
 ### Progressive Disclosure and Operability
 
-When the user asks whether the Skill wastes tokens, is overstuffed, loads too much detail into `SKILL.md`, or fails to use templates/scripts/tools well:
--> Load `reference/progressive_disclosure.md` for Knowledge ROI criteria, the 500-line rule, split decisions, and tool-script-template guidance.
+When the user asks whether the Skill wastes tokens, is overstuffed, loads too much detail into `SKILL.md`, or fails to use assets/scripts/tools well:
+-> Load `references/progressive_disclosure.md` for Knowledge ROI criteria, the 500-line rule, split decisions, and tool-script-output-template guidance.
 
 ### Calibration Examples
 

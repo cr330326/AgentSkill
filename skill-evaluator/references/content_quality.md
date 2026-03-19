@@ -63,14 +63,14 @@ Every important referenced file should be introduced as a contract with three pa
 **Weak reference:**
 
 ```md
-See `reference/revenue.md` for more details.
+See `references/revenue.md` for more details.
 ```
 
 **Strong reference:**
 
 ```md
 When the user asks about revenue growth, ARPU, or revenue composition:
--> Load `reference/revenue.md` for formulas, benchmarks, and red-flag checks.
+-> Load `references/revenue.md` for formulas, benchmarks, and red-flag checks.
 ```
 
 ### Routing Score Anchors
@@ -127,7 +127,7 @@ The output should help the user fix the Skill, not just judge it.
 | Issue | Why it hurts | Better pattern |
 | ------ | -------------- | ---------------- |
 | Naked reference path | The agent has no loading condition | Replace it with a contract reference |
-| `SKILL.md` is 700+ lines | Routing and reference material are mixed together | Keep routing in `SKILL.md`, move detail into `reference/` |
+| `SKILL.md` is 700+ lines | Routing and reference material are mixed together | Keep routing in `SKILL.md`, move detail into `references/` |
 
 ### Recommendation Score Anchors
 

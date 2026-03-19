@@ -20,7 +20,7 @@
 
 1. 用 description 做入口层，解决触发问题
 2. 用 SKILL.md 做主路由，解决任务分流问题
-3. 用 reference、templates、scripts、examples 等目录做按需加载资源，解决知识组织问题
+3. 用 references、assets、scripts、examples 等目录做按需加载资源，解决知识组织问题
 
 ## What You Will Find
 
@@ -40,17 +40,17 @@ AgentSkill/
 │   └── 循序渐进：渐进式披露架构设计.md
 └── skill-evaluator/
     ├── SKILL.md
+    ├── assets/
+    │   └── evaluation_report.md
     ├── examples/
     │   ├── bad_skill.md
     │   └── good_skill.md
-    ├── reference/
+    ├── references/
     │   ├── content_quality.md
     │   ├── progressive_disclosure.md
     │   └── structure_standards.md
     ├── scripts/
     │   └── analyze_skill.py
-    └── templates/
-        └── evaluation_report.md
 ```
 
 ## Start Here
@@ -66,9 +66,9 @@ AgentSkill/
 如果你想看一个更完整的 Skill 设计样例，优先阅读这些文件：
 
 - [skill-evaluator/SKILL.md](skill-evaluator/SKILL.md)
-- [skill-evaluator/reference/structure_standards.md](skill-evaluator/reference/structure_standards.md)
-- [skill-evaluator/reference/content_quality.md](skill-evaluator/reference/content_quality.md)
-- [skill-evaluator/reference/progressive_disclosure.md](skill-evaluator/reference/progressive_disclosure.md)
+- [skill-evaluator/references/structure_standards.md](skill-evaluator/references/structure_standards.md)
+- [skill-evaluator/references/content_quality.md](skill-evaluator/references/content_quality.md)
+- [skill-evaluator/references/progressive_disclosure.md](skill-evaluator/references/progressive_disclosure.md)
 
 ### 3. 使用脚本做基线检查
 
@@ -95,7 +95,7 @@ python skill-evaluator/scripts/analyze_skill.py <path> --json
 
 正式评估时，可以直接使用报告模板：
 
-- [skill-evaluator/templates/evaluation_report.md](skill-evaluator/templates/evaluation_report.md)
+- [skill-evaluator/assets/evaluation_report.md](skill-evaluator/assets/evaluation_report.md)
 
 ## Example Workflow
 
@@ -104,11 +104,11 @@ python skill-evaluator/scripts/analyze_skill.py <path> --json
 1. 明确这个 Skill 的目标、触发条件和边界。
 2. 运行 analyze_skill.py 获取确定性基线信号。
 3. 根据问题类型阅读对应标准：
-   - 结构设计问题，看 [skill-evaluator/reference/structure_standards.md](skill-evaluator/reference/structure_standards.md)
-   - 内容和路由问题，看 [skill-evaluator/reference/content_quality.md](skill-evaluator/reference/content_quality.md)
-   - token 效率和文件拆分问题，看 [skill-evaluator/reference/progressive_disclosure.md](skill-evaluator/reference/progressive_disclosure.md)
+    - 结构设计问题，看 [skill-evaluator/references/structure_standards.md](skill-evaluator/references/structure_standards.md)
+    - 内容和路由问题，看 [skill-evaluator/references/content_quality.md](skill-evaluator/references/content_quality.md)
+    - token 效率和文件拆分问题，看 [skill-evaluator/references/progressive_disclosure.md](skill-evaluator/references/progressive_disclosure.md)
 4. 用 [skill-evaluator/examples/good_skill.md](skill-evaluator/examples/good_skill.md) 和 [skill-evaluator/examples/bad_skill.md](skill-evaluator/examples/bad_skill.md) 做对照校准。
-5. 用 [skill-evaluator/templates/evaluation_report.md](skill-evaluator/templates/evaluation_report.md) 整理出结构化结论和改进建议。
+5. 用 [skill-evaluator/assets/evaluation_report.md](skill-evaluator/assets/evaluation_report.md) 整理出结构化结论和改进建议。
 
 ## Design Principles
 

@@ -51,8 +51,8 @@ If yes, the Skill is probably under-split.
 | If the content is... | Best home |
 |----------------------|-----------|
 | core routing logic | `SKILL.md` |
-| domain knowledge | `reference/` |
-| standard output shape | `templates/` |
+| domain knowledge | `references/` |
+| standard output shape | `assets/` |
 | deterministic processing | `scripts/` |
 | sample cases | `examples/` |
 | static lookup data | `data/` |
@@ -79,7 +79,7 @@ The article's final point matters here: Skills and Tools should cooperate.
 
 - Use `allowed-tools` to enforce least privilege
 - Use scripts for deterministic, repeatable logic
-- Use templates for standard output structures
+- Use assets for standard output structures
 - Let the agent execute a script rather than re-derive fixed logic every time
 
 ### Use a Script When
@@ -116,8 +116,8 @@ Use these questions when scoring:
 ### If the Skill is too long
 
 - Keep the workflow in `SKILL.md`
-- Split knowledge by domain into `reference/`
-- Move output structures into `templates/`
+- Split knowledge by domain into `references/`
+- Move output structures into `assets/`
 - Move deterministic checks into `scripts/`
 
 ### If the Skill has many files but poor loading behavior
