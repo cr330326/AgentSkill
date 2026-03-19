@@ -1,0 +1,290 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/logan/vehicle/feature/confirm": {
+      "get": {
+        "summary": "GET logan/vehicle/feature/confirm",
+        "deprecated": false,
+        "description": "",
+        "operationId": "checkFeatureByVin",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "featureList",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/logan/vehicleInfo/vin": {
+      "get": {
+        "summary": "GET logan/vehicleInfo/vin",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getVehicleInfoByVin",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "vin",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "respList",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/logan/vehicleInfo/vid": {
+      "get": {
+        "summary": "GET logan/vehicleInfo/vid",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getVehicleInfoByVid",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "vid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "respList",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/logan/vehicleInfo/iccid": {
+      "get": {
+        "summary": "GET logan/vehicleInfo/iccid",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getVehicleInfoByIccid",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "iccid",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "respList",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/logan/vehicleInfo/cduId": {
+      "get": {
+        "summary": "GET logan/vehicleInfo/cduId",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getVehicleInfoByCduId",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "cduId",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "respList",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/logan/vehicleInfo/plateNo": {
+      "get": {
+        "summary": "GET logan/vehicleInfo/plateNo",
+        "deprecated": false,
+        "description": "",
+        "operationId": "getVehicleInfoByPlateNo",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "plateNo",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "respList",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

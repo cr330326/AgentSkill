@@ -1,0 +1,138 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0",
+    "title": "ms-车管",
+    "description": "",
+    "termsOfService": ""
+  },
+  "externalDocs": {},
+  "servers": [],
+  "tags": [],
+  "paths": {
+    "/xp-vmp-open-boot/logan/vehicleInfo/plateNo": {
+      "get": {
+        "summary": "通过车牌号查询车辆信息（GET  /xp-vmp-open-boot/logan/vehicleInfo/plateNo）",
+        "responses": {
+          "200": { "headers": {}, "description": "", "content": {} }
+        },
+        "parameters": [
+          {
+            "name": "plateNo",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "query",
+            "required": true,
+            "example": "浙ANN371"
+          },
+          {
+            "name": "respList",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "query",
+            "required": true,
+            "example": "vin,cduId,iccid,plateNo,usageName,vehicleSeriesName,motorNo,deliveryTime,vehicleMaterielId,batchNo,produceTime,motorCtlNo,batteryNo,vehicleTypeCode,vehicleTypeName,vehicleSaleName,vid,usage,actColorCode,proclamationCode,deliveryTime,motorCtlNo,cduPartsNo,panoramicCamera"
+          },
+          {
+            "name": "logan",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "header",
+            "required": true,
+            "example": "test"
+          },
+          {
+            "name": "Client-Name",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "header",
+            "required": true,
+            "example": "Apifox/1.0.0"
+          },
+          {
+            "name": "Proxy-Host",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "header",
+            "required": false,
+            "example": "${Proxy-Host}"
+          },
+          {
+            "name": "Accept",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "header",
+            "required": false,
+            "example": "application/json"
+          }
+        ],
+        "requestBody": { "content": {} },
+        "tags": ["车管", "xp-vmp-open-boot"]
+      }
+    },
+    "/xp-vmp-open-boot/logan/vehicleInfo/vin": {
+      "get": {
+        "summary": "通过vin查询车辆信息 （GET  /xp-vmp-open-boot/logan/vehicleInfo/vin）",
+        "responses": {
+          "200": { "headers": {}, "description": "", "content": {} }
+        },
+        "description": "优化：慢查询治理，查询缓慢20秒内直接反馈空数据。不查询数据库减轻服务压力",
+        "parameters": [
+          {
+            "name": "vin",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "query",
+            "required": true,
+            "example": "H11HSGHA9PV489659"
+          },
+          {
+            "name": "respList",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "query",
+            "required": true,
+            "example": "vehicleSaleName,vin,cduId,iccid,plateNo,vehicleSeriesName,motorNo,vehicleMaterielId,deliveryTime,vehicleMaterielId,batchNo,produceTime,motorCtlNo,batteryNo,usage,usageName,vehicleTypeCode,vid,batchNo,proclamationCode,cduPartsNo,panoramicCamera"
+          },
+          {
+            "name": "logan",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "header",
+            "required": true,
+            "example": "test"
+          },
+          {
+            "name": "Client-Name",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "header",
+            "required": true,
+            "example": "Apifox/1.0.0"
+          },
+          {
+            "name": "Proxy-Host",
+            "schema": { "type": "string" },
+            "description": "",
+            "in": "header",
+            "required": false,
+            "example": "${Proxy-Host}"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "": { "type": "text", "description": "", "example": "" }
+                }
+              }
+            }
+          }
+        },
+        "tags": ["车管", "xp-vmp-open-boot"]
+      }
+    }
+  },
+  "components": {}
+}
