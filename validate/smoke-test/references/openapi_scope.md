@@ -17,6 +17,8 @@
 
 - 明显写操作：`POST`、`PUT`、`PATCH`、`DELETE`
 - 带路径参数但没有默认样例值的端点
+- 带必填 query 参数但没有 `example`、`default`、`const` 或 `enum` 可用值的端点
+- 带必填 header 参数且主 Swagger 与 seed 文档都无法提供样例值的端点
 - 需要鉴权但未提供鉴权信息的端点
 - 需要复杂请求体、文件上传、多段表单的端点
 
@@ -25,6 +27,7 @@
 - 默认最多保留 8 个端点。
 - 至少包含 1 个健康类端点；如果没有，说明原因。
 - 如果找不到可安全执行的端点，也要生成 manifest，并把所有候选放进 `skipped_operations`。
+- 如果主 Swagger 缺少样例，但 `seed_path` 中存在同 path+method 或后缀匹配的接口定义，可用 seed 补齐 query/header 样例。
 
 ## SPEC 的作用
 

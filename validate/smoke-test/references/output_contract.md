@@ -11,6 +11,7 @@
   "workspace": "/abs/path/.tmp/smoke/smoke-test",
   "test_file": "/abs/path/.tmp/smoke/smoke-test/tests/test_smoke_generated.py",
   "manifest_file": "/abs/path/.tmp/smoke/smoke-test/smoke_manifest.json",
+  "seed_file": "/abs/path/test_data.json",
   "result_file": null,
   "selected_operations": [],
   "skipped_operations": [],
@@ -26,6 +27,7 @@
 - `workspace`: smoke 工作目录的绝对路径
 - `test_file`: 生成的 pytest 文件
 - `manifest_file`: 记录候选端点、跳过原因和筛选依据的 JSON 文件
+- `seed_file`: 用于补充参数样例的 seed 文档；未提供时可缺省
 - `result_file`: 运行结果 JSON；未执行时为 `null`
 - `selected_operations`: 被纳入 smoke test 的接口摘要数组
 - `skipped_operations`: 被跳过的接口摘要数组，必须包含 `reason`
@@ -38,6 +40,10 @@
 {
   "method": "GET",
   "path": "/health",
+  "request_target": "/health",
+  "headers": {
+    "Client-Name": "Apifox/1.0.0"
+  },
   "summary": "Health check",
   "score": 160
 }
@@ -53,6 +59,8 @@
   "reason": "write_operation"
 }
 ```
+
+如果接口带必填 query 参数且具备样例值，`selected_operations` 应额外包含 `request_target`，例如 `/vehicle?id=123`。
 
 ## 失败场景
 
