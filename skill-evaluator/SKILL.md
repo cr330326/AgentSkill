@@ -13,7 +13,7 @@ A strong Skill behaves like a router, not a handbook:
 
 - Layer 1: `description` acts as the directory page and helps the agent decide whether the Skill should trigger.
 - Layer 2: `SKILL.md` acts as the main chapter and provides routing, workflow, tool constraints, and output rules.
-- Layer 3: `reference/`, `templates/`, `scripts/`, `examples/`, and `data/` are loaded or executed only when needed.
+- Layer 3: `references/`, `assets/`, `scripts/`, `examples/`, and `data/` are loaded or executed only when needed.
 
 ## Quick Routing
 
@@ -24,7 +24,7 @@ A strong Skill behaves like a router, not a handbook:
 | Token efficiency or file-splitting review | `reference/progressive_disclosure.md` | Judge knowledge ROI, contract references, file splitting, and script/template fit |
 | Calibration examples or before/after comparison | `examples/good_skill.md` and `examples/bad_skill.md` | Anchor the review with concrete contrastive examples |
 | Repeatable baseline checks | `scripts/analyze_skill.py` | Collect deterministic signals before qualitative review |
-| Formal scorecard output | `templates/evaluation_report.md` | Keep the evaluation report structured and comparable |
+| Formal scorecard output | `assets/evaluation_report.md` | Keep the evaluation report structured and comparable |
 
 ## Default Workflow
 
@@ -58,7 +58,7 @@ Use the script output as evidence, not as the final judgment.
 
 ### Step 5: Produce a Structured Report
 
-When the user wants a formal review, use `templates/evaluation_report.md`.
+When the user wants a formal review, use `assets/evaluation_report.md`.
 
 ## Contract References
 
@@ -88,7 +88,7 @@ When the user wants to see the target pattern for a strong Skill:
 ### Structured Report Output
 
 When the user wants a reusable scorecard, team review, or before/after rewrite guidance:
--> Use `templates/evaluation_report.md` for the report layout, severity ordering, and rewrite-plan format.
+-> Use `assets/evaluation_report.md` for the report layout, severity ordering, and rewrite-plan format.
 
 ## Tool Policy
 
