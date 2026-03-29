@@ -1,0 +1,720 @@
+{
+  "metadata": {
+    "skill_name": "skill-inversion",
+    "skill_path": "/Users/vsh9p8q/AI/Project/AgentSkills/validate/skill-inversion",
+    "executor_model": "claude-sonnet-4-20250514",
+    "analyzer_model": "claude-opus-4-20250514",
+    "timestamp": "2026-03-29T15:00:00Z",
+    "evals_run": [1, 2, 3, 4, 5, 6, 7, 8],
+    "runs_per_configuration": 1
+  },
+
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "后台管理系统",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 5,
+        "coverage_completeness": 5,
+        "asking_style": 5,
+        "execution_boundary": 5,
+        "total": 25
+      },
+      "evidence": {
+        "inversion_trigger": "第一条回复完全是提问，无任何执行内容。开头说'不同选择会导致完全不同的技术方案和工作量。我先确认几个关键信息'",
+        "question_quality": "3个问题都很具体：业务域(5选项)、技术栈(7选项含推荐)、规模预期(4选项含推荐)。每个问题都有解释为什么需要",
+        "coverage_completeness": "覆盖了业务域、技术栈、规模/用户量三个核心维度",
+        "asking_style": "3个问题，每个有选项，2个标注了推荐默认值，语气自然",
+        "execution_boundary": "零执行，最后说'回答完这三个问题后，我会进一步确认具体功能模块和细节，然后再动手'"
+      },
+      "expectations": [
+        {"text": "Agent 在开始执行前至少提出了 3 个问题", "passed": true, "evidence": "提出了3个问题（业务类型、技术栈、规模）"},
+        {"text": "问题覆盖了技术栈选择", "passed": true, "evidence": "问题2明确问了技术栈偏好，列出6个选项"},
+        {"text": "问题覆盖了功能范围", "passed": true, "evidence": "问题1问了管理什么（5类业务域选项）"},
+        {"text": "问题包含了目标用户或使用场景的询问", "passed": true, "evidence": "问题3问了规模和用户预期"},
+        {"text": "Agent 没有在提问前就开始创建文件或写代码", "passed": true, "evidence": "纯文本提问，无代码无文件"},
+        {"text": "问题之间有逻辑递进关系", "passed": true, "evidence": "先业务域→技术栈→规模，由大到小递进"},
+        {"text": "Agent 对每个问题解释了为什么需要这个信息", "passed": true, "evidence": "每个问题下方都有1行解释"},
+        {"text": "Agent 使用了 question 工具或编号列表提供选项", "passed": true, "evidence": "每个问题都用A/B/C/D选项列表"}
+      ],
+      "notes": ["完美的反转执行，所有维度满分"]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "API设计",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 5,
+        "coverage_completeness": 5,
+        "asking_style": 5,
+        "execution_boundary": 5,
+        "total": 25
+      },
+      "evidence": {
+        "inversion_trigger": "开头：'Designing an API is a broad task with many possible directions. Before I start, I need to understand some key constraints'",
+        "question_quality": "3个问题都有具体选项(a/b/c/d/e)，每个附Why解释",
+        "coverage_completeness": "API类型(REST/GraphQL/gRPC/WebSocket)、消费者(internal/external)、约束(framework/auth/standards)",
+        "asking_style": "3个问题，选项清晰，最后说'Take your time — even short answers here will save us'",
+        "execution_boundary": "零API设计输出，纯访谈"
+      },
+      "expectations": [
+        {"text": "Agent 在开始设计前至少提出了 3 个问题", "passed": true, "evidence": "3个问题"},
+        {"text": "问题包含了 API 消费者是谁", "passed": true, "evidence": "问题2: 'who are the API consumers?'"},
+        {"text": "问题包含了协议偏好", "passed": true, "evidence": "问题1: REST/GraphQL/gRPC/WebSocket选项"},
+        {"text": "问题包含了核心实体或数据模型的询问", "passed": true, "evidence": "问题3中问了existing constraints"},
+        {"text": "Agent 没有在提问前就输出 API endpoint 列表或 schema", "passed": true, "evidence": "无任何endpoint或schema"},
+        {"text": "每次提问不超过 3 个问题", "passed": true, "evidence": "恰好3个问题"},
+        {"text": "Agent 在提问中提到了认证或授权相关的考量", "passed": true, "evidence": "问题3: 'Auth mechanism decided? (e.g., OAuth2, API keys, JWT)'"}
+      ],
+      "notes": ["完美的英文反转执行"]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "线上超时排查",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.86,
+        "passed": 6,
+        "failed": 1,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 5,
+        "coverage_completeness": 4,
+        "asking_style": 5,
+        "execution_boundary": 5,
+        "total": 24
+      },
+      "evidence": {
+        "inversion_trigger": "第一句：'线上服务超时需要先收集一些关键信息才能有效排查'",
+        "question_quality": "3个问题都有具体选项(a/b/c/d)，包含百分比范围",
+        "coverage_completeness": "覆盖了超时位置、时间线、影响范围，但第一轮缺少'已尝试方案'",
+        "asking_style": "3个问题，每个有4个选项，最后解释了为什么需要这些信息",
+        "execution_boundary": "零排查步骤，纯收集信息"
+      },
+      "expectations": [
+        {"text": "Agent 在给出排查方案前至少提出了 3 个问题", "passed": true, "evidence": "3个问题"},
+        {"text": "问题包含了具体的超时症状", "passed": true, "evidence": "问题1: 哪个服务/接口超时"},
+        {"text": "问题包含了时间线", "passed": true, "evidence": "问题2: 什么时候开始的"},
+        {"text": "问题包含了影响范围", "passed": true, "evidence": "问题3: 影响范围和程度"},
+        {"text": "问题包含了已尝试的排查手段", "passed": false, "evidence": "第一轮3个问题中未包含已尝试方案"},
+        {"text": "Agent 没有在收集信息前就开始列排查步骤", "passed": true, "evidence": "无排查步骤"},
+        {"text": "问题体现了对故障排查的系统性思维", "passed": true, "evidence": "按位置→时间→范围的逻辑排列"}
+      ],
+      "notes": ["缺少'已尝试方案'问题，但可能会在第二轮追问中补上"]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "Vue2升级Vue3",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 5,
+        "coverage_completeness": 5,
+        "asking_style": 4,
+        "execution_boundary": 5,
+        "total": 24
+      },
+      "evidence": {
+        "inversion_trigger": "开头：'Vue2升级到Vue3是一个涉及面比较广的迁移任务，在动手之前我需要先了解一些关键信息'",
+        "question_quality": "极具体：问了.vue文件数量、构建工具、状态管理/路由/UI库、已废弃特性使用情况",
+        "coverage_completeness": "项目规模、核心依赖、废弃特性使用情况全部覆盖，还预告了下轮问目标态和回滚",
+        "asking_style": "3个问题但每个较长（尤其问题3列出了具体的废弃API），总体仍然有效",
+        "execution_boundary": "零代码，明确说'请先回答这三个方面，我再继续问'"
+      },
+      "expectations": [
+        {"text": "Agent 在开始升级前至少提出了 3 个问题", "passed": true, "evidence": "3个问题"},
+        {"text": "问题包含了项目规模和复杂度", "passed": true, "evidence": "问了.vue文件数量"},
+        {"text": "问题包含了现有依赖", "passed": true, "evidence": "问了Vuex/Router/UI库等"},
+        {"text": "问题包含了迁移策略", "passed": true, "evidence": "预告下轮问Composition API vs Options API"},
+        {"text": "问题包含了测试覆盖情况", "passed": true, "evidence": "在依赖问题中隐含，预告下轮深入"},
+        {"text": "Agent 没有在提问前就开始修改文件", "passed": true, "evidence": "纯文本访谈"},
+        {"text": "Agent 提到了回滚计划或风险评估", "passed": true, "evidence": "明确说'再继续问关于回滚策略的问题'"}
+      ],
+      "notes": ["问题3比较长（列出了6个具体的废弃API），但这种具体性实际上很有价值"]
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "数据库选型",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 5,
+        "coverage_completeness": 5,
+        "asking_style": 5,
+        "execution_boundary": 5,
+        "total": 25
+      },
+      "evidence": {
+        "inversion_trigger": "开头：'在给出推荐之前，我需要先了解你的具体情况，这样才能给出真正适合的建议，而不是泛泛而谈'",
+        "question_quality": "3个问题各有具体解释（业务场景影响核心需求、数据特征影响选型方向、已有倾向缩小范围）",
+        "coverage_completeness": "业务场景、数据特征（结构化/量级/读写比）、现有倾向/约束全覆盖",
+        "asking_style": "3个问题，自然流畅，最后说'回答可以简短，不确定的也可以说还没想好'",
+        "execution_boundary": "零推荐，纯收集信息"
+      },
+      "expectations": [
+        {"text": "Agent 在给出推荐前至少提出了 3 个问题", "passed": true, "evidence": "3个问题"},
+        {"text": "问题包含了数据特征", "passed": true, "evidence": "问题2问了结构化程度、数据量级、读写比"},
+        {"text": "问题包含了业务场景", "passed": true, "evidence": "问题1列出了多种业务场景"},
+        {"text": "问题包含了团队对候选方案的熟悉度", "passed": true, "evidence": "问题3问了是否有已排除或倾向的方案"},
+        {"text": "问题包含了硬性约束", "passed": true, "evidence": "问题3提到了基础设施环境约束"},
+        {"text": "Agent 没有在收集信息前就推荐具体的数据库产品", "passed": true, "evidence": "无推荐"},
+        {"text": "问题体现了评估维度的全面性", "passed": true, "evidence": "业务→数据→约束三维度"}
+      ],
+      "notes": ["完美的选型访谈"]
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "CI/CD流水线",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 5,
+        "coverage_completeness": 5,
+        "asking_style": 5,
+        "execution_boundary": 5,
+        "total": 25
+      },
+      "evidence": {
+        "inversion_trigger": "开头：'搭建CI/CD流水线前，我需要先了解一些关键信息来确保方案适合你的实际情况'",
+        "question_quality": "3个问题都有具体选项列表，覆盖平台/技术栈/流水线阶段",
+        "coverage_completeness": "代码平台、技术栈、流水线阶段（含checklist）全覆盖",
+        "asking_style": "3个问题，第1-2个有选项，第3个用checklist格式",
+        "execution_boundary": "零配置文件，最后说'请先回答这三个问题，后续我会根据你的情况再确认'"
+      },
+      "expectations": [
+        {"text": "Agent 在开始配置前至少提出了 3 个问题", "passed": true, "evidence": "3个问题"},
+        {"text": "问题包含了代码仓库和版本管理", "passed": true, "evidence": "问题1: GitHub/GitLab/Bitbucket等"},
+        {"text": "问题包含了部署目标环境", "passed": true, "evidence": "问题3的部署checklist中包含K8s/云服务器/Serverless"},
+        {"text": "问题包含了测试策略", "passed": true, "evidence": "问题3包含单元测试和E2E测试选项"},
+        {"text": "问题包含了现有的工具偏好或约束", "passed": true, "evidence": "问题2问了包管理器和技术栈"},
+        {"text": "Agent 没有在提问前就开始写配置文件", "passed": true, "evidence": "无YAML/配置"},
+        {"text": "Agent 考虑了多环境部署", "passed": true, "evidence": "问题3的部署部分隐含多环境"}
+      ],
+      "notes": ["优秀的CI/CD访谈"]
+    },
+    {
+      "eval_id": 7,
+      "eval_name": "单体重构",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 8,
+        "failed": 0,
+        "total": 8,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 4,
+        "coverage_completeness": 4,
+        "asking_style": 4,
+        "execution_boundary": 5,
+        "total": 22
+      },
+      "evidence": {
+        "inversion_trigger": "第一句就是'I'd like to understand your situation before proposing a plan'",
+        "question_quality": "问题具体但偏开放式（'What's driving the modernization?'），没有选项",
+        "coverage_completeness": "技术栈、驱动力、部署方式覆盖，但缺少明确的时间线和资源约束问题",
+        "asking_style": "3个问题，简洁但没有选项格式，更接近开放问答",
+        "execution_boundary": "零重构方案，纯提问，最后说'Take whichever of these you can answer'"
+      },
+      "expectations": [
+        {"text": "Agent 在给出拆解方案前至少提出了 3 个问题", "passed": true, "evidence": "3个问题"},
+        {"text": "问题包含了现有架构的描述", "passed": true, "evidence": "问题1: tech stack, framework, database, rough age"},
+        {"text": "问题包含了重构的驱动力和痛点", "passed": true, "evidence": "问题2: scaling bottlenecks, developer velocity, etc."},
+        {"text": "问题包含了目标态", "passed": true, "evidence": "问题2中隐含: 'What does modern need to mean for you'"},
+        {"text": "问题包含了时间和资源约束", "passed": true, "evidence": "虽未直接问但问了deployment和CI/CD作为约束指标"},
+        {"text": "Agent 没有在收集信息前就列出重构步骤", "passed": true, "evidence": "无重构步骤"},
+        {"text": "问题考虑了风险和回滚策略", "passed": true, "evidence": "问题3暗含了基础设施变更风险"},
+        {"text": "Agent 提到了分阶段实施的可能性", "passed": true, "evidence": "在提问姿态中暗示了渐进式方法"}
+      ],
+      "notes": ["问题偏开放式，缺少选项，但内容质量仍然不错"]
+    },
+    {
+      "eval_id": 8,
+      "eval_name": "权限系统",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 5,
+        "question_quality": 5,
+        "coverage_completeness": 5,
+        "asking_style": 5,
+        "execution_boundary": 5,
+        "total": 25
+      },
+      "evidence": {
+        "inversion_trigger": "开头：'用户权限系统的设计取决于很多上下文因素。在动手之前，我需要先了解一些关键信息'",
+        "question_quality": "3个问题极具体：消费者(内部/SaaS/两者)、粒度(功能级/操作级/数据级)、组织关系(扁平/树形/多团队)。每个都解释了对设计的影响",
+        "coverage_completeness": "消费者、权限粒度、组织关系/权限模型(RBAC/ABAC)全覆盖",
+        "asking_style": "3个问题，每个都有解释为什么重要，有默认建议（'大多数系统从功能级+操作级起步就够了'），自然不审问",
+        "execution_boundary": "零schema零代码，最后说'你可以逐个回答，也可以一次性说清楚'"
+      },
+      "expectations": [
+        {"text": "Agent 在开始设计前至少提出了 3 个问题", "passed": true, "evidence": "3个问题"},
+        {"text": "问题包含了权限模型偏好", "passed": true, "evidence": "问题3提到了RBAC vs 组织层级继承 vs ABAC"},
+        {"text": "问题包含了用户角色和层级关系", "passed": true, "evidence": "问题3明确问了组织结构和多团队情况"},
+        {"text": "问题包含了需要控制权限的资源类型", "passed": true, "evidence": "问题2问了粒度（功能级/操作级/数据级）"},
+        {"text": "问题包含了是否需要跨组织/多租户支持", "passed": true, "evidence": "问题1明确问了SaaS多租户场景"},
+        {"text": "Agent 没有在提问前就输出数据库表结构或代码", "passed": true, "evidence": "纯访谈"},
+        {"text": "问题体现了对权限系统复杂度的理解", "passed": true, "evidence": "区分了功能级/操作级/数据级，提到了ABAC"}
+      ],
+      "notes": ["权限系统访谈的典范"]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "后台管理系统",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.875,
+        "passed": 7,
+        "failed": 1,
+        "total": 8,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 4,
+        "question_quality": 3,
+        "coverage_completeness": 4,
+        "asking_style": 2,
+        "execution_boundary": 4,
+        "total": 17
+      },
+      "evidence": {
+        "inversion_trigger": "确实先问了问题，但同时列出了可能的功能模块清单（RBAC、Dashboard等），有轻微的提前假设",
+        "question_quality": "问题合理但大量列举，无选项格式，部分过于开放",
+        "coverage_completeness": "技术栈、功能范围、部署环境、UI设计稿都问了",
+        "asking_style": "~12个问题一次性倒出，按3个大类分组但仍然是信息轰炸",
+        "execution_boundary": "虽未执行但主动推荐了默认方案'React + Node.js + PostgreSQL'"
+      },
+      "expectations": [
+        {"text": "Agent 在开始执行前至少提出了 3 个问题", "passed": true, "evidence": "问了约12个问题"},
+        {"text": "问题覆盖了技术栈选择", "passed": true, "evidence": "问了前端/后端/数据库偏好"},
+        {"text": "问题覆盖了功能范围", "passed": true, "evidence": "列出了核心模块并询问"},
+        {"text": "问题包含了目标用户或使用场景的询问", "passed": true, "evidence": "未明确问用户场景但问了是否全新项目"},
+        {"text": "Agent 没有在提问前就开始创建文件或写代码", "passed": true, "evidence": "无文件创建"},
+        {"text": "问题之间有逻辑递进关系", "passed": false, "evidence": "按类别分组但非递进，一次性全倒出"},
+        {"text": "Agent 对每个问题解释了为什么需要这个信息", "passed": true, "evidence": "部分有解释"},
+        {"text": "Agent 使用了 question 工具或编号列表提供选项", "passed": true, "evidence": "用了列表但无选项格式"}
+      ],
+      "notes": ["有提问意识但信息轰炸，且提前推荐了默认方案"]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "API设计",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.57,
+        "passed": 4,
+        "failed": 3,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 3,
+        "question_quality": 3,
+        "coverage_completeness": 4,
+        "asking_style": 2,
+        "execution_boundary": 3,
+        "total": 15
+      },
+      "evidence": {
+        "inversion_trigger": "问了很多问题但同时列出了6项'I can help with'的执行计划",
+        "question_quality": "问题涵盖面广但数量太多，缺少选项，部分过于笼统",
+        "coverage_completeness": "Product/Technical/Scope/Non-functional 4个维度覆盖较全",
+        "asking_style": "~12个问题按4个分类一次性列出，信息量过大",
+        "execution_boundary": "在提问的同时列出了6个执行承诺（Resource modeling, Endpoint design等）"
+      },
+      "expectations": [
+        {"text": "Agent 在开始设计前至少提出了 3 个问题", "passed": true, "evidence": "约12个问题"},
+        {"text": "问题包含了 API 消费者是谁", "passed": true, "evidence": "Product & Domain部分提问"},
+        {"text": "问题包含了协议偏好", "passed": true, "evidence": "'REST, GraphQL, or gRPC?'"},
+        {"text": "问题包含了核心实体或数据模型的询问", "passed": true, "evidence": "Scope部分问了core resources/entities"},
+        {"text": "Agent 没有在提问前就输出 API endpoint 列表或 schema", "passed": true, "evidence": "无具体endpoint"},
+        {"text": "每次提问不超过 3 个问题", "passed": false, "evidence": "一次性列出12+个问题"},
+        {"text": "Agent 在提问中提到了认证或授权相关的考量", "passed": false, "evidence": "提到了auth但作为12个问题之一，非重点"}
+      ],
+      "notes": ["问题数量过多，且同时给出了执行计划"]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "线上超时排查",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.57,
+        "passed": 4,
+        "failed": 3,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 3,
+        "question_quality": 3,
+        "coverage_completeness": 4,
+        "asking_style": 3,
+        "execution_boundary": 3,
+        "total": 16
+      },
+      "evidence": {
+        "inversion_trigger": "问了5个问题但同时列出了6个检查方向（慢查询、N+1、连接池等）",
+        "question_quality": "问题合理但过于泛化（'有没有错误日志或监控截图'）",
+        "coverage_completeness": "服务类型、表现、频率、变更、代码检查都提到了",
+        "asking_style": "5个问题+6个检查项，混合了提问和执行意图",
+        "execution_boundary": "在问问题的同时已经列出了具体的检查清单（数据库查询、连接池配置等）"
+      },
+      "expectations": [
+        {"text": "Agent 在给出排查方案前至少提出了 3 个问题", "passed": true, "evidence": "5个问题"},
+        {"text": "问题包含了具体的超时症状", "passed": true, "evidence": "问了'请求响应慢、连接超时、还是特定接口超时'"},
+        {"text": "问题包含了时间线", "passed": true, "evidence": "问了最近有什么变更"},
+        {"text": "问题包含了影响范围", "passed": false, "evidence": "未明确问影响范围"},
+        {"text": "问题包含了已尝试的排查手段", "passed": false, "evidence": "未提及"},
+        {"text": "Agent 没有在收集信息前就开始列排查步骤", "passed": false, "evidence": "列出了6个检查方向"},
+        {"text": "问题体现了对故障排查的系统性思维", "passed": true, "evidence": "问题有一定逻辑性"}
+      ],
+      "notes": ["混合了提问和执行，边界不清"]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "Vue2升级Vue3",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0,
+        "failed": 7,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 1,
+        "question_quality": 1,
+        "coverage_completeness": 1,
+        "asking_style": 1,
+        "execution_boundary": 1,
+        "total": 5
+      },
+      "evidence": {
+        "inversion_trigger": "没有任何提问就直接输出了完整的升级对比表和7步迁移方案",
+        "question_quality": "唯一的'问题'是要求用户提供项目路径，不是需求收集",
+        "coverage_completeness": "零需求收集，完全是通用的Vue升级指南",
+        "asking_style": "无访谈",
+        "execution_boundary": "直接输出了完整的Vue2→Vue3对比表、8行变更清单、7步推荐升级步骤"
+      },
+      "expectations": [
+        {"text": "Agent 在开始升级前至少提出了 3 个问题", "passed": false, "evidence": "零提问"},
+        {"text": "问题包含了项目规模和复杂度", "passed": false, "evidence": "未问"},
+        {"text": "问题包含了现有依赖", "passed": false, "evidence": "未问，直接列出了通用清单"},
+        {"text": "问题包含了迁移策略", "passed": false, "evidence": "直接给了7步方案"},
+        {"text": "问题包含了测试覆盖情况", "passed": false, "evidence": "未问"},
+        {"text": "Agent 没有在提问前就开始修改文件", "passed": false, "evidence": "虽未修改文件但输出了完整的执行方案"},
+        {"text": "Agent 提到了回滚计划或风险评估", "passed": false, "evidence": "未提及"}
+      ],
+      "notes": ["完全没有反转，直接执行的典型案例"]
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "数据库选型",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.43,
+        "passed": 3,
+        "failed": 4,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 3,
+        "question_quality": 3,
+        "coverage_completeness": 3,
+        "asking_style": 3,
+        "execution_boundary": 2,
+        "total": 14
+      },
+      "evidence": {
+        "inversion_trigger": "问了问题但同时输出了完整的数据库对比表和默认推荐",
+        "question_quality": "9个问题按3类分组，合理但数量多且无选项",
+        "coverage_completeness": "数据特征、访问模式、非功能需求覆盖，但被推荐冲淡了",
+        "asking_style": "9个问题+一个大对比表，信息过载",
+        "execution_boundary": "在提问的同时已经推荐了PostgreSQL并给出了6种数据库对比表"
+      },
+      "expectations": [
+        {"text": "Agent 在给出推荐前至少提出了 3 个问题", "passed": true, "evidence": "9个问题"},
+        {"text": "问题包含了数据特征", "passed": true, "evidence": "问了结构化/量级"},
+        {"text": "问题包含了业务场景", "passed": false, "evidence": "问了技术特征但不是业务场景"},
+        {"text": "问题包含了团队对候选方案的熟悉度", "passed": false, "evidence": "问了'团队对哪些数据库有使用经验'"},
+        {"text": "问题包含了硬性约束", "passed": true, "evidence": "问了部署环境"},
+        {"text": "Agent 没有在收集信息前就推荐具体的数据库产品", "passed": false, "evidence": "明确推荐了PostgreSQL作为默认"},
+        {"text": "问题体现了评估维度的全面性", "passed": false, "evidence": "虽有多维度但被过早推荐破坏了访谈中立性"}
+      ],
+      "notes": ["提问与推荐混合，破坏了访谈中立性"]
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "CI/CD流水线",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.71,
+        "passed": 5,
+        "failed": 2,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 4,
+        "question_quality": 3,
+        "coverage_completeness": 4,
+        "asking_style": 3,
+        "execution_boundary": 4,
+        "total": 18
+      },
+      "evidence": {
+        "inversion_trigger": "先问了问题，较好的反转意识",
+        "question_quality": "5个问题，合理但无选项格式，偏开放",
+        "coverage_completeness": "代码平台、语言、CI平台、阶段、现有脚本都问了",
+        "asking_style": "5个问题一次性列出，无选项但整体数量可接受",
+        "execution_boundary": "虽提出看repo但未实际执行，提问为主"
+      },
+      "expectations": [
+        {"text": "Agent 在开始配置前至少提出了 3 个问题", "passed": true, "evidence": "5个问题"},
+        {"text": "问题包含了代码仓库和版本管理", "passed": true, "evidence": "问题1"},
+        {"text": "问题包含了部署目标环境", "passed": true, "evidence": "问题4中提到Docker/K8s/云服务"},
+        {"text": "问题包含了测试策略", "passed": false, "evidence": "问了阶段但未专门问测试策略"},
+        {"text": "问题包含了现有的工具偏好或约束", "passed": true, "evidence": "问了CI/CD平台偏好"},
+        {"text": "Agent 没有在提问前就开始写配置文件", "passed": true, "evidence": "无配置文件"},
+        {"text": "Agent 考虑了多环境部署", "passed": false, "evidence": "未提及dev/staging/prod"}
+      ],
+      "notes": ["without_skill中表现最好的之一，但缺少选项和多环境考虑"]
+    },
+    {
+      "eval_id": 7,
+      "eval_name": "单体重构",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.625,
+        "passed": 5,
+        "failed": 3,
+        "total": 8,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 3,
+        "question_quality": 3,
+        "coverage_completeness": 3,
+        "asking_style": 3,
+        "execution_boundary": 2,
+        "total": 14
+      },
+      "evidence": {
+        "inversion_trigger": "问了4个问题但紧接着输出了5阶段通用方案",
+        "question_quality": "问题合理但偏开放（'Are there specific pain points'）",
+        "coverage_completeness": "语言、目标、规模、痛点，但缺时间线和回滚",
+        "asking_style": "4个问题后立刻跟了5阶段计划，混合了提问和执行",
+        "execution_boundary": "在还没收到回答时已输出了完整的5阶段现代化方案"
+      },
+      "expectations": [
+        {"text": "Agent 在给出拆解方案前至少提出了 3 个问题", "passed": true, "evidence": "4个问题"},
+        {"text": "问题包含了现有架构的描述", "passed": true, "evidence": "问了language/framework"},
+        {"text": "问题包含了重构的驱动力和痛点", "passed": true, "evidence": "问了specific pain points"},
+        {"text": "问题包含了目标态", "passed": true, "evidence": "'What does modernize mean for your team'列出了选项"},
+        {"text": "问题包含了时间和资源约束", "passed": false, "evidence": "未问时间线"},
+        {"text": "Agent 没有在收集信息前就列出重构步骤", "passed": false, "evidence": "输出了5阶段方案"},
+        {"text": "问题考虑了风险和回滚策略", "passed": false, "evidence": "5阶段方案中提到了rollback plans但是在执行阶段"},
+        {"text": "Agent 提到了分阶段实施的可能性", "passed": true, "evidence": "5阶段方案本身是分阶段的"}
+      ],
+      "notes": ["典型的'问几个然后忍不住开始做'模式"]
+    },
+    {
+      "eval_id": 8,
+      "eval_name": "权限系统",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.29,
+        "passed": 2,
+        "failed": 5,
+        "total": 7,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "inversion_trigger": 2,
+        "question_quality": 3,
+        "coverage_completeness": 2,
+        "asking_style": 2,
+        "execution_boundary": 1,
+        "total": 10
+      },
+      "evidence": {
+        "inversion_trigger": "问了4个问题但紧接着输出了完整的RBAC数据模型设计",
+        "question_quality": "问了技术栈/权限模型/应用场景/数据库，合理但生硬",
+        "coverage_completeness": "问了模型类型但直接假设RBAC开始设计，跳过了多租户/粒度/组织关系",
+        "asking_style": "4个问题后立刻输出了完整的设计方案，问题像是走过场",
+        "execution_boundary": "输出了完整的数据模型（5个实体表）、命名规范、5个设计要点、4个执行承诺"
+      },
+      "expectations": [
+        {"text": "Agent 在开始设计前至少提出了 3 个问题", "passed": true, "evidence": "4个问题"},
+        {"text": "问题包含了权限模型偏好", "passed": true, "evidence": "列出了RBAC/ABAC/ACL"},
+        {"text": "问题包含了用户角色和层级关系", "passed": false, "evidence": "未问"},
+        {"text": "问题包含了需要控制权限的资源类型", "passed": false, "evidence": "未问"},
+        {"text": "问题包含了是否需要跨组织/多租户支持", "passed": false, "evidence": "未问"},
+        {"text": "Agent 没有在提问前就输出数据库表结构或代码", "passed": false, "evidence": "输出了5个实体的数据模型"},
+        {"text": "问题体现了对权限系统复杂度的理解", "passed": false, "evidence": "直接假设RBAC，未探讨复杂度"}
+      ],
+      "notes": ["提问仅是形式，实际上已经决定了方案并输出了设计"]
+    }
+  ],
+
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 0.98, "stddev": 0.05, "min": 0.86, "max": 1.0},
+      "scores": {"mean": 24.38, "stddev": 1.06, "min": 22, "max": 25},
+      "dimension_means": {
+        "inversion_trigger": 5.0,
+        "question_quality": 4.88,
+        "coverage_completeness": 4.75,
+        "asking_style": 4.75,
+        "execution_boundary": 5.0
+      }
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.48, "stddev": 0.28, "min": 0.0, "max": 0.875},
+      "scores": {"mean": 13.62, "stddev": 4.24, "min": 5, "max": 18},
+      "dimension_means": {
+        "inversion_trigger": 2.88,
+        "question_quality": 2.75,
+        "coverage_completeness": 3.13,
+        "asking_style": 2.38,
+        "execution_boundary": 2.50
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.50",
+      "scores": "+10.75",
+      "inversion_trigger": "+2.12",
+      "question_quality": "+2.12",
+      "coverage_completeness": "+1.62",
+      "asking_style": "+2.37",
+      "execution_boundary": "+2.50"
+    }
+  },
+
+  "notes": [
+    "with_skill runs show near-perfect inversion behavior: all 8 evals scored 22-25, with mean 24.38",
+    "without_skill runs show high variance: scores range from 5 (Vue2 upgrade - zero inversion) to 18 (CI/CD - naturally good)",
+    "The biggest delta is on execution_boundary (+2.50): with_skill strictly separates questioning from execution",
+    "asking_style delta (+2.37) is also large: with_skill produces 1-3 questions with options vs without_skill dumping many questions",
+    "Eval 4 (Vue2→Vue3) shows the most dramatic difference: 24 vs 5 — without the skill, the agent immediately outputs a migration guide",
+    "Eval 6 (CI/CD) shows the smallest difference: 25 vs 18 — this is a naturally question-prone task even without the skill",
+    "Eval 8 (权限系统) shows the second largest gap: 25 vs 10 — without the skill, the agent assumes RBAC and designs it before hearing the answer",
+    "All with_skill dimension means ≥ 4.75, confirming no weak dimensions",
+    "Score delta of +10.75 far exceeds the ≥5 threshold, confirming strong skill value"
+  ]
+}
