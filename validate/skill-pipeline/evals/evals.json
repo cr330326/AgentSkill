@@ -1,0 +1,270 @@
+{
+  "skill_name": "skill-pipeline",
+  "version": "1.0",
+  "description": "skill-pipeline 的测试用例集，验证该 skill 能否正确地以流水线模式执行多步骤任务",
+  "scoring": {
+    "total_points": 100,
+    "dimensions": {
+      "pipeline_execution": {
+        "weight": 30,
+        "description": "是否严格按阶段顺序执行，不跳步"
+      },
+      "checkpoint_behavior": {
+        "weight": 30,
+        "description": "到达检查点时是否暂停并输出结果摘要，等待用户确认"
+      },
+      "progress_visibility": {
+        "weight": 15,
+        "description": "是否有进度指示（[阶段 N/总数]），阶段产物是否清晰"
+      },
+      "content_quality": {
+        "weight": 15,
+        "description": "阶段产物是否专业、有实质内容（不是占位符）"
+      },
+      "rule_compliance": {
+        "weight": 10,
+        "description": "是否遵循 PL-01~PL-06 执行规则"
+      }
+    }
+  },
+  "evals": [
+    {
+      "id": 1,
+      "name": "doc-pipeline-basic",
+      "prompt": "帮我写一份技术设计文档，是关于一个用户权限系统的。用文档流水线来做，一步一步来，我想每步确认。",
+      "expected_output": "加载 doc-pipeline.md，执行文档生成流水线。在阶段 1（需求澄清）完成后暂停，输出需求理解摘要，等用户确认。不会一次性写完整个文档。",
+      "assertions": [
+        {
+          "id": "A1-01",
+          "text": "加载了 doc-pipeline.md 流水线定义",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A1-02",
+          "text": "输出中包含进度指示（如 [阶段 1/5] 或类似格式）",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A1-03",
+          "text": "在阶段 1（需求澄清）完成后暂停，没有直接跳到撰写文档",
+          "type": "checkpoint",
+          "points": 15
+        },
+        {
+          "id": "A1-04",
+          "text": "输出了阶段 1 的产物摘要（对需求的理解，如文档类型、受众等）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A1-05",
+          "text": "包含明确的确认请求（如'请确认'、'继续吗'、'回复继续'等）",
+          "type": "checkpoint",
+          "points": 8
+        },
+        {
+          "id": "A1-06",
+          "text": "没有一次性生成完整文档（应停在第一个检查点）",
+          "type": "checkpoint",
+          "points": 10
+        },
+        {
+          "id": "A1-07",
+          "text": "需求澄清内容与'用户权限系统'相关（不是通用模板）",
+          "type": "content",
+          "points": 4
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "release-pipeline-npm",
+      "prompt": "我要发布一个 npm 包的新版本。上次发布是 1.2.3，这次加了两个新功能和一个 bug 修复。帮我走发布流程。",
+      "expected_output": "加载 release-pipeline.md，执行版本发布流水线。在阶段 1（发布前检查）完成后暂停，输出检查结果清单。应建议版本号为 1.3.0（minor，因为有新功能）。",
+      "assertions": [
+        {
+          "id": "A2-01",
+          "text": "加载了 release-pipeline.md 流水线定义",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A2-02",
+          "text": "在第一个检查点暂停，没有直接执行 npm publish",
+          "type": "checkpoint",
+          "points": 15
+        },
+        {
+          "id": "A2-03",
+          "text": "输出了发布前检查的结果（如分支状态、测试结果等）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A2-04",
+          "text": "输出中包含进度指示",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A2-05",
+          "text": "提到了版本号建议（应为 minor 升级，如 1.3.0）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A2-06",
+          "text": "提及了 npm 相关的发布命令或流程",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A2-07",
+          "text": "包含确认请求",
+          "type": "checkpoint",
+          "points": 6
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "data-pipeline-csv-cleaning",
+      "prompt": "我有一个 CSV 文件大概 5 万行，需要做数据清洗：去除重复行、统一日期格式（有的是 2024-01-01 有的是 01/01/2024）、填充缺失的邮箱字段。帮我用数据处理流水线来做。",
+      "expected_output": "加载 data-pipeline.md，执行数据处理流水线。在阶段 1（数据源分析）完成后暂停。应先分析数据源情况而非直接开始清洗。",
+      "assertions": [
+        {
+          "id": "A3-01",
+          "text": "加载了 data-pipeline.md 流水线定义",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A3-02",
+          "text": "先做数据源分析，不是直接开始清洗",
+          "type": "checkpoint",
+          "points": 12
+        },
+        {
+          "id": "A3-03",
+          "text": "在阶段 1 的检查点暂停，等待用户确认",
+          "type": "checkpoint",
+          "points": 12
+        },
+        {
+          "id": "A3-04",
+          "text": "分析内容涉及用户提到的三个问题（重复行、日期格式、缺失邮箱）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A3-05",
+          "text": "输出中包含进度指示",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A3-06",
+          "text": "提到了备份原始数据的建议",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A3-07",
+          "text": "包含确认请求",
+          "type": "checkpoint",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "custom-pipeline-creation",
+      "prompt": "我们有一个客户上线流程：1) 签署合同 2) 创建客户账号 3) 配置权限 4) 导入历史数据 5) 培训 6) 正式上线。帮我把这个做成一个流水线 skill，存到 references/ 目录下。",
+      "expected_output": "识别出用户想创建自定义流水线。按照 SKILL.md 中的流水线定义格式，创建一个 onboarding-pipeline.md。应在关键节点标 [CHECKPOINT]。",
+      "assertions": [
+        {
+          "id": "A4-01",
+          "text": "生成了流水线定义文件（如 onboarding-pipeline.md 或 customer-pipeline.md）",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A4-02",
+          "text": "包含用户提到的 6 个阶段",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A4-03",
+          "text": "合理标记了 [CHECKPOINT]（至少在'签署合同'和'正式上线'之前）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A4-04",
+          "text": "每个阶段有目标、操作、输出等字段（遵循流水线定义格式）",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A4-05",
+          "text": "有适用场景说明",
+          "type": "structural",
+          "points": 4
+        },
+        {
+          "id": "A4-06",
+          "text": "检查点阶段有'检查要点'字段",
+          "type": "structural",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "ambiguous-needs-pipeline",
+      "prompt": "这个任务比较复杂，我需要先调研竞品，然后写产品需求文档，再做技术方案设计，最后评审。能不能帮我一步一步来？每步做完我看一下再继续。",
+      "expected_output": "识别出用户需要流水线模式（即使没有说'流水线'）。应自动创建一个临时流水线或推荐使用流水线模式，按4个阶段执行，每步暂停确认。",
+      "assertions": [
+        {
+          "id": "A5-01",
+          "text": "识别出用户需求适合流水线模式",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A5-02",
+          "text": "将任务拆分为多个阶段（至少覆盖用户提到的4步）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A5-03",
+          "text": "第一个阶段（竞品调研）执行后暂停，等待确认",
+          "type": "checkpoint",
+          "points": 12
+        },
+        {
+          "id": "A5-04",
+          "text": "输出中包含进度指示",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A5-05",
+          "text": "第一阶段有实质性内容（不是只说'我要做竞品调研'而是真的开始做）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A5-06",
+          "text": "包含确认请求",
+          "type": "checkpoint",
+          "points": 7
+        }
+      ]
+    }
+  ]
+}
