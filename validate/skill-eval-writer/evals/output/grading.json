@@ -1,0 +1,316 @@
+{
+  "skill_name": "skill-eval-writer",
+  "total_score": {
+    "earned": 261,
+    "possible": 261,
+    "percentage": 100.0
+  },
+  "per_eval": [
+    {
+      "eval_id": 1,
+      "eval_name": "basic-text-output-skill",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A1-01",
+          "text": "输出包含 evals.json 的完整内容",
+          "passed": true,
+          "evidence": "skill_name: JSON 块中包含字段 'skill_name'; evals: JSON 块中包含字段 'evals'"
+        },
+        {
+          "id": "A1-02",
+          "text": "evals.json 中有 5 个 eval",
+          "passed": true,
+          "evidence": "找到 eval ids: [1, 2, 3, 4, 5], 名称模式数: 5, 推算 eval 数: 5"
+        },
+        {
+          "id": "A1-03",
+          "text": "eval-1 prompt 嵌入了违反 Conventional Commits 的示例",
+          "passed": true,
+          "evidence": "commit 关键词: 命中 4/4 个关键词: ['feat', 'fix', 'commit', 'Conventional Commits']; 包含违反规范的 commit 示例: True"
+        },
+        {
+          "id": "A1-04",
+          "text": "assertion 有 id/text/type/points 字段",
+          "passed": true,
+          "evidence": "assertion 字段检查: {'id': True, 'text': True, 'type': True, 'points': True}"
+        },
+        {
+          "id": "A1-05",
+          "text": "输出包含 grade.py 的完整代码",
+          "passed": true,
+          "evidence": "提到 grade.py=True, Python 代码块=True, 含 def 函数=True"
+        },
+        {
+          "id": "A1-06",
+          "text": "grade.py 包含 from __future__ import annotations",
+          "passed": true,
+          "evidence": "找到 from __future__ import annotations"
+        },
+        {
+          "id": "A1-07",
+          "text": "grade.py 包含 compute_score 和 main",
+          "passed": true,
+          "evidence": "找到函数: ['compute_score', 'main', 'grade_eval', 'load_evals']; 缺失: []"
+        },
+        {
+          "id": "A1-08",
+          "text": "grade.py 包含关键词检查函数",
+          "passed": true,
+          "evidence": "命中 3/4 个关键词: ['check_keywords', 'check_section', 'check_proximity']"
+        },
+        {
+          "id": "A1-09",
+          "text": "evals.json 包含 scoring.dimensions 且 >=4 维度",
+          "passed": true,
+          "evidence": "找到 dimensions 块, 维度数(weight字段数): 5"
+        },
+        {
+          "id": "A1-10",
+          "text": "eval-5 是边界/降级类型",
+          "passed": true,
+          "evidence": "命中 1/10 个关键词: ['boundary']"
+        }
+      ],
+      "score": {
+        "earned": 60,
+        "possible": 60,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "file-generating-skill",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A2-01",
+          "text": "输出包含 evals.json",
+          "passed": true,
+          "evidence": "JSON 块中包含字段 'skill_name'"
+        },
+        {
+          "id": "A2-02",
+          "text": "evals.json 有 5 个 eval",
+          "passed": true,
+          "evidence": "找到 eval ids: [1, 2, 3, 4, 5], 名称模式数: 5, 推算 eval 数: 5"
+        },
+        {
+          "id": "A2-03",
+          "text": "grade.py 使用 collect_output_files",
+          "passed": true,
+          "evidence": "collect_output_files=True, collect_output=True; 期望文件型"
+        },
+        {
+          "id": "A2-04",
+          "text": "grade_eval_N 参数是 files（dict）",
+          "passed": true,
+          "evidence": "grade_eval_N(files...) 参数: True"
+        },
+        {
+          "id": "A2-05",
+          "text": "grade.py 检查 OpenAPI 关键字段",
+          "passed": true,
+          "evidence": "命中 5/5 个关键词: ['openapi', 'paths', 'schemas', 'components', 'info']"
+        },
+        {
+          "id": "A2-06",
+          "text": "eval prompt 描述了具体 API 端点",
+          "passed": true,
+          "evidence": "命中 5/7 个关键词: ['/users', '/products', '/orders', 'GET', 'POST']"
+        },
+        {
+          "id": "A2-07",
+          "text": "grade.py 包含文件查找函数",
+          "passed": true,
+          "evidence": "命中 2/3 个关键词: ['find_file_by_name', 'find_file']"
+        },
+        {
+          "id": "A2-08",
+          "text": "grade.py 标准头部和架构",
+          "passed": true,
+          "evidence": "__future__=True; 结构: 找到函数: ['compute_score', 'main', 'grade_eval', 'load_evals']; 缺失: []"
+        },
+        {
+          "id": "A2-09",
+          "text": "assertions 包含 file_exists 类型",
+          "passed": true,
+          "evidence": "file_exists 类型断言: True"
+        }
+      ],
+      "score": {
+        "earned": 56,
+        "possible": 56,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "multi-stage-pipeline-skill",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A3-01",
+          "text": "evals.json 有 5 个 eval",
+          "passed": true,
+          "evidence": "找到 eval ids: [1, 2, 3, 4, 5], 名称模式数: 5, 推算 eval 数: 5"
+        },
+        {
+          "id": "A3-02",
+          "text": "包含 checkpoint 类型断言",
+          "passed": true,
+          "evidence": "checkpoint 类型断言: True"
+        },
+        {
+          "id": "A3-03",
+          "text": "grade.py 检查阶段进度标记",
+          "passed": true,
+          "evidence": "阶段关键词: 命中 5/5 个关键词: ['阶段', 'Stage', 'Step', 'phase', '进度']; 阶段正则: True"
+        },
+        {
+          "id": "A3-04",
+          "text": "grade.py 检查暂停行为",
+          "passed": true,
+          "evidence": "命中 9/9 个关键词: ['暂停', 'pause', '等待', '确认', '不应包含', 'forbidden', 'leaked', 'checkpoint', '阶段 2']"
+        },
+        {
+          "id": "A3-05",
+          "text": "eval prompt 包含具体表结构",
+          "passed": true,
+          "evidence": "命中 12/12 个关键词: ['CREATE TABLE', 'ALTER TABLE', 'column', '字段', 'VARCHAR', 'INT', 'users', 'orders', '表结构', 'schema', 'id', 'name']"
+        },
+        {
+          "id": "A3-06",
+          "text": "grade.py 检查 SQL 关键词",
+          "passed": true,
+          "evidence": "命中 5/6 个关键词: ['ALTER TABLE', 'CREATE TABLE', 'INSERT', 'SELECT', 'DROP']"
+        },
+        {
+          "id": "A3-07",
+          "text": "evals.json 包含 scoring.dimensions",
+          "passed": true,
+          "evidence": "找到 dimensions 块, 维度数(weight字段数): 5"
+        },
+        {
+          "id": "A3-08",
+          "text": "grade.py 标准架构",
+          "passed": true,
+          "evidence": "找到函数: ['compute_score', 'main', 'grade_eval', 'load_evals']; 缺失: []"
+        },
+        {
+          "id": "A3-09",
+          "text": "eval-5 测试边界场景",
+          "passed": true,
+          "evidence": "命中 3/10 个关键词: ['无变更', '空', '相同']"
+        }
+      ],
+      "score": {
+        "earned": 55,
+        "possible": 55,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "incomplete-skill-info",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A4-01",
+          "text": "输出包含 evals.json",
+          "passed": true,
+          "evidence": "evals 字段: JSON 块中包含字段 'evals'; skill_name: JSON 块中包含字段 'skill_name'; eval 描述: True"
+        },
+        {
+          "id": "A4-02",
+          "text": "有至少 3 个 eval",
+          "passed": true,
+          "evidence": "找到 eval ids: [1, 2, 3, 4, 5], 名称模式数: 5, 推算 eval 数: 5"
+        },
+        {
+          "id": "A4-03",
+          "text": "prompt 嵌入了构造的日志文本",
+          "passed": true,
+          "evidence": "日志关键词: 命中 6/6 个关键词: ['ERROR', 'WARN', 'WARNING', 'INFO', 'log', '日志']; 构造日志文本: True"
+        },
+        {
+          "id": "A4-04",
+          "text": "grade.py 检查时间段分组",
+          "passed": true,
+          "evidence": "命中 8/11 个关键词: ['1小时', '6小时', '1h', '6h', 'hour', '时间段', '最近', 'recent']"
+        },
+        {
+          "id": "A4-05",
+          "text": "grade.py 检查异常统计",
+          "passed": true,
+          "evidence": "命中 10/10 个关键词: ['数量', '频率', '频繁', 'count', 'frequency', '最多', 'top', '统计', '摘要', 'summary']"
+        },
+        {
+          "id": "A4-06",
+          "text": "指出信息不完整并提出建议",
+          "passed": true,
+          "evidence": "命中 5/12 个关键词: ['不完整', '未明确', '建议补充', '补充', '未定义']"
+        },
+        {
+          "id": "A4-07",
+          "text": "from __future__ import annotations",
+          "passed": true,
+          "evidence": "找到 from __future__ import annotations"
+        },
+        {
+          "id": "A4-08",
+          "text": "assertion id 符合 A{N}-{seq} 格式",
+          "passed": true,
+          "evidence": "assertion id 格式: True"
+        }
+      ],
+      "score": {
+        "earned": 50,
+        "possible": 50,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "vague-untestable-skill",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A5-01",
+          "text": "指出 skill 过于模糊",
+          "passed": true,
+          "evidence": "命中 7/12 个关键词: ['模糊', 'vague', '宽泛', '难以测试', '无法验证', '没有具体', '缺乏具体']"
+        },
+        {
+          "id": "A5-02",
+          "text": "解释了模糊 skill 难以测试的原因",
+          "passed": true,
+          "evidence": "命中 11/12 个关键词: ['区分度', '输出格式', '规则', '工作流', '流程', '无法区分', '任何 AI', '基线', '关键词', '结构', '约束']"
+        },
+        {
+          "id": "A5-03",
+          "text": "建议先完善 SKILL.md",
+          "passed": true,
+          "evidence": "改进建议: 命中 5/10 个关键词: ['完善', '改进', '补充', '明确', '具体化']; 提到 SKILL.md: True"
+        },
+        {
+          "id": "A5-04",
+          "text": "给出具体的 SKILL.md 改进建议",
+          "passed": true,
+          "evidence": "命中 9/12 个关键词: ['输出格式', '编号', '规则', '工作流', '模板', '边界', 'boundary', '分支逻辑', '条件']"
+        },
+        {
+          "id": "A5-05",
+          "text": "未盲目生成无区分度的 eval",
+          "passed": true,
+          "evidence": "生成了 eval: True; 标注了局限性: True"
+        }
+      ],
+      "score": {
+        "earned": 40,
+        "possible": 40,
+        "percentage": 100.0
+      }
+    }
+  ]
+}

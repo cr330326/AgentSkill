@@ -1,0 +1,52 @@
+{
+  "skill_name": "skill-eval-writer",
+  "total_score": {
+    "earned": 40,
+    "possible": 40,
+    "percentage": 100.0
+  },
+  "per_eval": [
+    {
+      "eval_id": 5,
+      "eval_name": "vague-untestable-skill",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A5-01",
+          "text": "指出 skill 过于模糊",
+          "passed": true,
+          "evidence": "命中 7/12 个关键词: ['模糊', 'vague', '宽泛', '难以测试', '无法验证', '没有具体', '缺乏具体']"
+        },
+        {
+          "id": "A5-02",
+          "text": "解释了模糊 skill 难以测试的原因",
+          "passed": true,
+          "evidence": "命中 11/12 个关键词: ['区分度', '输出格式', '规则', '工作流', '流程', '无法区分', '任何 AI', '基线', '关键词', '结构', '约束']"
+        },
+        {
+          "id": "A5-03",
+          "text": "建议先完善 SKILL.md",
+          "passed": true,
+          "evidence": "改进建议: 命中 5/10 个关键词: ['完善', '改进', '补充', '明确', '具体化']; 提到 SKILL.md: True"
+        },
+        {
+          "id": "A5-04",
+          "text": "给出具体的 SKILL.md 改进建议",
+          "passed": true,
+          "evidence": "命中 9/12 个关键词: ['输出格式', '编号', '规则', '工作流', '模板', '边界', 'boundary', '分支逻辑', '条件']"
+        },
+        {
+          "id": "A5-05",
+          "text": "未盲目生成无区分度的 eval",
+          "passed": true,
+          "evidence": "生成了 eval: True; 标注了局限性: True"
+        }
+      ],
+      "score": {
+        "earned": 40,
+        "possible": 40,
+        "percentage": 100.0
+      }
+    }
+  ]
+}

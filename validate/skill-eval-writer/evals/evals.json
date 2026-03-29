@@ -1,0 +1,318 @@
+{
+  "skill_name": "skill-eval-writer",
+  "version": "1.0",
+  "description": "skill-eval-writer 的测试用例集，验证该元工具能否为不同类型的 skill 正确生成 evals.json 和 grade.py",
+  "scoring": {
+    "total_points": 100,
+    "dimensions": {
+      "eval_design": {
+        "weight": 25,
+        "description": "5 个 eval 是否遵循 5 槽位模式（基本路径→领域变体→领域跨越→模糊→边界），覆盖面是否完整"
+      },
+      "assertion_quality": {
+        "weight": 25,
+        "description": "断言是否可程序化验证、分值是否合理、关键词是否精确（不过宽不过窄）"
+      },
+      "grade_py_architecture": {
+        "weight": 25,
+        "description": "grade.py 是否包含标准架构（load_evals → collect_output → check 函数 → grade_eval_N → compute_score → main）"
+      },
+      "json_schema_compliance": {
+        "weight": 15,
+        "description": "evals.json 是否符合规范 schema（skill_name、scoring.dimensions、evals[].assertions 等）"
+      },
+      "edge_handling": {
+        "weight": 10,
+        "description": "对模糊输入和边界情况的处理质量"
+      }
+    }
+  },
+  "evals": [
+    {
+      "id": 1,
+      "name": "basic-text-output-skill",
+      "prompt": "请为以下 skill 编写测试用例（evals）和评分脚本（grade.py）。\n\n## 目标 skill 的 SKILL.md\n\n```markdown\n---\nname: commit-message-reviewer\ndescription: >-\n  审查 git commit message 的质量，检查是否符合 Conventional Commits 规范。\n  输出结构化的审查报告，包含问题列表和改写建议。\n  当用户提到\"审查 commit\"、\"commit message\"、\"提交信息\"时使用。\n---\n\n# Commit Message Reviewer\n\n## 工作流程\n\n1. 接收用户提供的 commit message（单条或多条）\n2. 逐条检查是否符合以下规则：\n   - 格式：type(scope): description\n   - type 必须是 feat/fix/docs/style/refactor/test/chore 之一\n   - description 首字母小写，不以句号结尾\n   - body 和 footer 用空行分隔\n3. 输出审查报告，包含：\n   - 总览：合格数/总数\n   - 每条不合格的 commit：问题描述 + 改写建议\n   - 可选：最佳实践提示\n```\n\n## 目标 skill 的 references/\n\n（无 references 文件，规则全部内嵌在 SKILL.md 中）\n\n请按照 skill-eval-writer 的工作流程，生成 evals.json 和 grade.py。",
+      "expected_output": "输出包含完整的 evals.json（5 个 eval 用例，覆盖基本 → 边界）和 grade.py（标准架构）。eval 的 prompt 中应嵌入故意违反规范的 commit message 作为'已知答案'。grade.py 应使用 check_keywords 等函数验证输出中是否提到了这些问题。",
+      "assertions": [
+        {
+          "id": "A1-01",
+          "text": "输出包含 evals.json 的完整内容（含 skill_name 和 evals 数组）",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A1-02",
+          "text": "evals.json 中有 5 个 eval 用例",
+          "type": "structural",
+          "points": 7
+        },
+        {
+          "id": "A1-03",
+          "text": "eval-1 的 prompt 中嵌入了违反 Conventional Commits 的 commit message（已知答案）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A1-04",
+          "text": "每个 eval 有 assertions 数组，每个 assertion 有 id/text/type/points 字段",
+          "type": "structural",
+          "points": 7
+        },
+        {
+          "id": "A1-05",
+          "text": "输出包含 grade.py 的完整代码",
+          "type": "structural",
+          "points": 7
+        },
+        {
+          "id": "A1-06",
+          "text": "grade.py 包含 from __future__ import annotations",
+          "type": "structural",
+          "points": 3
+        },
+        {
+          "id": "A1-07",
+          "text": "grade.py 包含 compute_score 函数和 main 函数",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A1-08",
+          "text": "grade.py 包含 check_keywords 或类似的关键词检查函数",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A1-09",
+          "text": "evals.json 包含 scoring.dimensions 且至少有 4 个维度",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A1-10",
+          "text": "eval-5 是边界/降级类型（如不合法输入或空输入）",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "file-generating-skill",
+      "prompt": "我有一个生成文件的 skill，请帮我写 eval 和 grade.py。\n\n## 目标 skill 的 SKILL.md\n\n```markdown\n---\nname: api-spec-generator\ndescription: >-\n  根据用户描述的 API 需求，生成 OpenAPI 3.0 规范文件（YAML 格式）。\n  输出文件包含 paths、schemas、responses 等完整定义。\n  当用户提到\"生成 API 规范\"、\"OpenAPI\"、\"swagger\"、\"API 文档生成\"时使用。\n---\n\n# API Spec Generator\n\n## 工作流程\n\n1. 理解用户的 API 需求（端点、参数、返回值）\n2. 生成 OpenAPI 3.0 YAML 文件，结构：\n   - openapi: 3.0.x\n   - info（title, version, description）\n   - paths（每个端点的 GET/POST/PUT/DELETE）\n   - components/schemas（数据模型定义）\n3. 将文件保存为 api-spec.yaml\n4. 输出简要说明\n\n## 输出格式\n\n生成文件：`api-spec.yaml`\n对话输出：简要说明生成了什么内容\n```\n\n## 目标 skill 的 references/\n\n（无）\n\n请生成 evals.json 和 grade.py。注意这是一个文件生成型 skill，grade.py 需要检查生成的文件内容。",
+      "expected_output": "evals.json 有 5 个 eval，prompt 描述不同的 API 需求。grade.py 使用 collect_output_files() 收集文件，grade_eval_N(files) 检查生成的 yaml 文件是否包含预期的 paths/schemas。",
+      "assertions": [
+        {
+          "id": "A2-01",
+          "text": "输出包含 evals.json",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A2-02",
+          "text": "evals.json 有 5 个 eval 用例",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A2-03",
+          "text": "grade.py 使用 collect_output_files 或类似的文件收集方式（而非 collect_output）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A2-04",
+          "text": "grade.py 的 grade_eval_N 函数参数是 files（dict）而非 content（str）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A2-05",
+          "text": "grade.py 包含检查 YAML/OpenAPI 关键字段的逻辑（如 openapi、paths、schemas）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A2-06",
+          "text": "至少一个 eval 的 prompt 描述了具体的 API 端点（如 /users、/products）",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A2-07",
+          "text": "grade.py 包含 find_file_by_name 或类似的文件查找函数",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A2-08",
+          "text": "grade.py 包含 from __future__ import annotations 和 compute_score/main",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A2-09",
+          "text": "eval 的 assertion 中包含 file_exists 类型的断言",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "multi-stage-pipeline-skill",
+      "prompt": "帮我为以下多阶段 skill 写测试用例和评分脚本。\n\n## 目标 skill 的 SKILL.md\n\n```markdown\n---\nname: data-migration-planner\ndescription: >-\n  为数据库迁移任务生成分阶段执行计划。包含3个阶段：\n  阶段1-分析现有schema，阶段2-生成迁移SQL，阶段3-生成回滚方案。\n  每个阶段完成后暂停等待用户确认。\n  当用户提到\"数据迁移\"、\"database migration\"、\"schema变更\"时使用。\n---\n\n# Data Migration Planner\n\n## 工作流程\n\n### 阶段 1: Schema 分析\n- 接收用户提供的源表结构和目标表结构\n- 对比差异，列出需要变更的字段\n- 输出差异报告\n- **暂停，等待用户确认**\n\n### 阶段 2: 迁移 SQL 生成\n- 根据差异生成 ALTER TABLE / CREATE TABLE 语句\n- 生成数据迁移 DML（INSERT ... SELECT）\n- 标注每条语句的风险等级（高/中/低）\n- **暂停，等待用户确认**\n\n### 阶段 3: 回滚方案\n- 为每条迁移 SQL 生成对应的回滚语句\n- 生成回滚脚本 rollback.sql\n- 输出执行检查清单\n```\n\n请生成 evals.json 和 grade.py。注意这个 skill 有多个阶段，每个阶段后暂停。",
+      "expected_output": "evals.json 的 prompt 描述具体的表结构变更场景。grade.py 需要检查阶段标记（如 [阶段 1/3]）、暂停行为（阶段 1 完成后不应包含阶段 2 的内容）、SQL 语句关键词等。",
+      "assertions": [
+        {
+          "id": "A3-01",
+          "text": "evals.json 有 5 个 eval 用例",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A3-02",
+          "text": "至少一个 eval 的 assertions 中包含 checkpoint 类型（验证阶段暂停行为）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A3-03",
+          "text": "grade.py 包含检查阶段进度标记的逻辑（如 阶段/Stage/Step 相关正则）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A3-04",
+          "text": "grade.py 包含检查暂停行为的逻辑（阶段1完成后不应有阶段2内容）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A3-05",
+          "text": "eval 的 prompt 中包含具体的表结构或 schema 描述",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A3-06",
+          "text": "grade.py 包含检查 SQL 相关关键词的逻辑（ALTER TABLE、CREATE TABLE、INSERT 等）",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A3-07",
+          "text": "evals.json 包含 scoring.dimensions",
+          "type": "structural",
+          "points": 3
+        },
+        {
+          "id": "A3-08",
+          "text": "grade.py 包含 compute_score 和 main 函数",
+          "type": "structural",
+          "points": 4
+        },
+        {
+          "id": "A3-09",
+          "text": "eval-5 测试边界场景（如无变更需要或不兼容的 schema）",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "incomplete-skill-info",
+      "prompt": "我有一个 skill 叫 log-analyzer，它能分析日志文件并输出异常摘要。我没有写 SKILL.md，就是口头告诉你它的功能：\n\n- 输入是一段日志文本（多行）\n- 它会识别 ERROR 和 WARN 级别的日志\n- 按时间段分组（最近1小时、1-6小时、6小时以上）\n- 输出一个摘要报告：每个时间段的异常数量、最频繁的异常类型、建议关注的日志行\n\n帮我写 eval 和 grade.py 吧。",
+      "expected_output": "即使没有正式的 SKILL.md，也应该能根据口头描述推断出 skill 的核心行为，并设计合理的 eval。prompt 中应该嵌入故意构造的日志（含 ERROR/WARN），grade.py 应检查输出中是否按时间段分组、是否统计了异常数量。",
+      "assertions": [
+        {
+          "id": "A4-01",
+          "text": "输出包含 evals.json",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A4-02",
+          "text": "evals.json 有 5 个 eval（或至少 3 个以上，考虑信息不完整可能做调整）",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A4-03",
+          "text": "至少一个 eval 的 prompt 中嵌入了构造的日志文本（包含 ERROR 和 WARN）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A4-04",
+          "text": "grade.py 包含检查时间段分组的逻辑（最近1小时、1-6小时 等关键词）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A4-05",
+          "text": "grade.py 包含检查异常统计的逻辑（数量、频率相关关键词）",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A4-06",
+          "text": "主动指出信息不完整并提出澄清建议（如输出格式未明确、边界场景未定义）",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A4-07",
+          "text": "grade.py 包含 from __future__ import annotations",
+          "type": "structural",
+          "points": 3
+        },
+        {
+          "id": "A4-08",
+          "text": "assertion 的 id 格式符合 A{N}-{seq} 规范",
+          "type": "structural",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "vague-untestable-skill",
+      "prompt": "帮我给这个 skill 写 eval：\n\n```markdown\n---\nname: general-helper\ndescription: 一个通用的 AI 助手，帮助用户解决各种问题。\n---\n\n# General Helper\n\n帮助用户解决问题。根据用户的需求给出建议。\n```\n\n这个 skill 很简单，帮我写 eval 和 grade.py。",
+      "expected_output": "应该指出这个 skill 过于模糊，几乎无法编写有区分度的测试。没有具体的输出格式、规则、分支逻辑，任何 AI 都能回答'帮助用户解决问题'。应建议先完善 SKILL.md（明确输入输出格式、工作流、规则约束）后再写 eval。如果仍然尝试写，应解释这些 eval 的局限性。",
+      "assertions": [
+        {
+          "id": "A5-01",
+          "text": "指出 skill 过于模糊/宽泛，难以编写有效的测试",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A5-02",
+          "text": "解释了为什么模糊的 skill 难以测试（如缺少具体输出格式、无法区分好坏输出）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A5-03",
+          "text": "建议先完善 SKILL.md 再写 eval",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A5-04",
+          "text": "给出了 SKILL.md 应该包含的具体改进建议（如定义输出格式、添加规则编号、明确边界）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A5-05",
+          "text": "没有盲目生成看似完整但实际无区分度的 eval（如果生成了 eval 则明确标注了局限性）",
+          "type": "content",
+          "points": 7
+        }
+      ]
+    }
+  ]
+}

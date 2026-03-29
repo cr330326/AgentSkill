@@ -1,0 +1,82 @@
+{
+  "skill_name": "skill-eval-writer",
+  "total_score": {
+    "earned": 60,
+    "possible": 60,
+    "percentage": 100.0
+  },
+  "per_eval": [
+    {
+      "eval_id": 1,
+      "eval_name": "basic-text-output-skill",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A1-01",
+          "text": "输出包含 evals.json 的完整内容",
+          "passed": true,
+          "evidence": "skill_name: JSON 块中包含字段 'skill_name'; evals: JSON 块中包含字段 'evals'"
+        },
+        {
+          "id": "A1-02",
+          "text": "evals.json 中有 5 个 eval",
+          "passed": true,
+          "evidence": "找到 eval ids: [1, 2, 3, 4, 5], 名称模式数: 5, 推算 eval 数: 5"
+        },
+        {
+          "id": "A1-03",
+          "text": "eval-1 prompt 嵌入了违反 Conventional Commits 的示例",
+          "passed": true,
+          "evidence": "commit 关键词: 命中 4/4 个关键词: ['feat', 'fix', 'commit', 'Conventional Commits']; 包含违反规范的 commit 示例: True"
+        },
+        {
+          "id": "A1-04",
+          "text": "assertion 有 id/text/type/points 字段",
+          "passed": true,
+          "evidence": "assertion 字段检查: {'id': True, 'text': True, 'type': True, 'points': True}"
+        },
+        {
+          "id": "A1-05",
+          "text": "输出包含 grade.py 的完整代码",
+          "passed": true,
+          "evidence": "提到 grade.py=True, Python 代码块=True, 含 def 函数=True"
+        },
+        {
+          "id": "A1-06",
+          "text": "grade.py 包含 from __future__ import annotations",
+          "passed": true,
+          "evidence": "找到 from __future__ import annotations"
+        },
+        {
+          "id": "A1-07",
+          "text": "grade.py 包含 compute_score 和 main",
+          "passed": true,
+          "evidence": "找到函数: ['compute_score', 'main', 'grade_eval', 'load_evals']; 缺失: []"
+        },
+        {
+          "id": "A1-08",
+          "text": "grade.py 包含关键词检查函数",
+          "passed": true,
+          "evidence": "命中 3/4 个关键词: ['check_keywords', 'check_section', 'check_proximity']"
+        },
+        {
+          "id": "A1-09",
+          "text": "evals.json 包含 scoring.dimensions 且 >=4 维度",
+          "passed": true,
+          "evidence": "找到 dimensions 块, 维度数(weight字段数): 5"
+        },
+        {
+          "id": "A1-10",
+          "text": "eval-5 是边界/降级类型",
+          "passed": true,
+          "evidence": "命中 1/10 个关键词: ['boundary']"
+        }
+      ],
+      "score": {
+        "earned": 60,
+        "possible": 60,
+        "percentage": 100.0
+      }
+    }
+  ]
+}
