@@ -1,0 +1,336 @@
+{
+  "skill_name": "skill-reviewer",
+  "version": "1.0",
+  "description": "skill-reviewer 的测试用例集，验证该 skill 能否正确地基于审查清单输出结构化审查报告",
+  "scoring": {
+    "total_points": 100,
+    "dimensions": {
+      "checklist_selection": {
+        "weight": 20,
+        "description": "是否根据审查类型正确加载了对应的检查清单"
+      },
+      "report_structure": {
+        "weight": 25,
+        "description": "输出是否遵循审查报告模板（标题、总览、严重程度分组、位置+问题+修复建议）"
+      },
+      "checklist_reference": {
+        "weight": 25,
+        "description": "发现的问题是否引用了清单编号（PY-xx / SEC-xx / DOC-xx）"
+      },
+      "issue_quality": {
+        "weight": 20,
+        "description": "发现的问题是否准确、有实质内容，修复建议是否具体可行"
+      },
+      "severity_classification": {
+        "weight": 10,
+        "description": "严重程度分类是否合理（严重/警告/建议）"
+      }
+    }
+  },
+  "evals": [
+    {
+      "id": 1,
+      "name": "python-code-review-basic",
+      "prompt": "帮我审查一下这段 Python 代码：\n\n```python\nimport os\nimport requests\nimport json\nfrom datetime import datetime\nimport sys\n\nAPI_KEY = \"sk-1234567890abcdef\"\n\ndef get_user_data(user_id, db_conn):\n    query = \"SELECT * FROM users WHERE id = \" + str(user_id)\n    result = db_conn.execute(query)\n    return result\n\ndef process(data):\n    try:\n        for i in range(len(data)):\n            item = data[i]\n            if item['type'] == 'A':\n                if item['status'] == 'active':\n                    if item['score'] > 80:\n                        print('good')\n    except:\n        pass\n\ndef read_file(path):\n    f = open(path, 'r')\n    content = f.read()\n    return content\n```",
+      "expected_output": "加载 python-review-checklist.md，识别出至少 5 个问题：硬编码 API_KEY（PY-26）、SQL 注入（PY-24）、裸 except（PY-11）、吞掉异常（PY-13）、未用 with 管理文件（PY-15）、嵌套过深（PY-19）、缺少类型标注（PY-06）。输出按严重程度分组的结构化报告。",
+      "assertions": [
+        {
+          "id": "A1-01",
+          "text": "加载了 python-review-checklist.md",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A1-02",
+          "text": "输出包含报告模板的关键结构（审查报告标题、审查类型、总览）",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A1-03",
+          "text": "发现了硬编码 API_KEY 问题并引用了 PY-26 或 PY-23~PY-28 范围的编号",
+          "type": "checklist_ref",
+          "points": 8
+        },
+        {
+          "id": "A1-04",
+          "text": "发现了 SQL 注入问题并引用了 PY-24",
+          "type": "checklist_ref",
+          "points": 8
+        },
+        {
+          "id": "A1-05",
+          "text": "发现了裸 except 或吞掉异常问题并引用了 PY-11 或 PY-13",
+          "type": "checklist_ref",
+          "points": 8
+        },
+        {
+          "id": "A1-06",
+          "text": "发现了文件资源未用 with 语句管理的问题并引用了 PY-15",
+          "type": "checklist_ref",
+          "points": 5
+        },
+        {
+          "id": "A1-07",
+          "text": "问题按严重程度分组（至少有'严重'和'警告'或'建议'两个级别）",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A1-08",
+          "text": "每个问题包含修复建议（而非只指出问题）",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A1-09",
+          "text": "总览部分有问题数量统计（如'共发现 X 个问题'）",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A1-10",
+          "text": "SQL 注入和硬编码 API_KEY 被标记为'严重'级别",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "security-audit-api",
+      "prompt": "这个 API 接口有安全隐患吗？帮我做个安全审计：\n\n```python\nfrom flask import Flask, request, jsonify\nimport sqlite3\nimport pickle\nimport subprocess\n\napp = Flask(__name__)\napp.config['DEBUG'] = True\n\n@app.route('/api/user/<user_id>')\ndef get_user(user_id):\n    conn = sqlite3.connect('app.db')\n    cursor = conn.cursor()\n    cursor.execute(f\"SELECT * FROM users WHERE id = '{user_id}'\")\n    user = cursor.fetchone()\n    if not user:\n        return jsonify({'error': f'User {user_id} not found', 'db_path': 'app.db'}), 404\n    return jsonify({'user': user})\n\n@app.route('/api/import', methods=['POST'])\ndef import_data():\n    data = pickle.loads(request.data)\n    return jsonify({'status': 'ok', 'items': len(data)})\n\n@app.route('/api/run', methods=['POST'])\ndef run_command():\n    cmd = request.json.get('command')\n    result = subprocess.run(cmd, shell=True, capture_output=True)\n    return jsonify({'output': result.stdout.decode()})\n\n@app.route('/api/file')\ndef read_file():\n    path = request.args.get('path')\n    with open(path, 'r') as f:\n        return f.read()\n\nif __name__ == '__main__':\n    app.run(host='0.0.0.0')\n```",
+      "expected_output": "加载 owasp-checklist.md，识别出多个严重安全漏洞：SQL 注入（SEC-09）、命令注入（SEC-10）、不安全的反序列化（SEC-13/SEC-29）、路径遍历（SEC-12）、debug 模式泄露信息（SEC-16）、无权限控制（SEC-01）。输出按严重程度分组的安全审查报告。",
+      "assertions": [
+        {
+          "id": "A2-01",
+          "text": "加载了 owasp-checklist.md",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A2-02",
+          "text": "发现了 SQL 注入问题并引用了 SEC-09",
+          "type": "checklist_ref",
+          "points": 7
+        },
+        {
+          "id": "A2-03",
+          "text": "发现了命令注入问题并引用了 SEC-10",
+          "type": "checklist_ref",
+          "points": 7
+        },
+        {
+          "id": "A2-04",
+          "text": "发现了 pickle 反序列化问题并引用了 SEC-13 或 SEC-29",
+          "type": "checklist_ref",
+          "points": 7
+        },
+        {
+          "id": "A2-05",
+          "text": "发现了路径遍历问题并引用了 SEC-12",
+          "type": "checklist_ref",
+          "points": 7
+        },
+        {
+          "id": "A2-06",
+          "text": "发现了 debug 模式或信息泄露问题并引用了 SEC-16 或 SEC-17~SEC-20 范围的编号",
+          "type": "checklist_ref",
+          "points": 5
+        },
+        {
+          "id": "A2-07",
+          "text": "报告有按严重程度分组的结构",
+          "type": "structural",
+          "points": 6
+        },
+        {
+          "id": "A2-08",
+          "text": "审查类型标注为安全审计/安全审查",
+          "type": "structural",
+          "points": 3
+        },
+        {
+          "id": "A2-09",
+          "text": "修复建议中包含了具体的代码示例或修改方案（不是只说'应该修复'）",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A2-10",
+          "text": "SQL 注入和命令注入被标记为'严重'级别",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "doc-quality-review",
+      "prompt": "帮我检查一下这个 README 写得怎么样：\n\n```markdown\n# MyProject\n\n一个很好的项目。\n\n## 安装\n\nnpm install myproject\n\n## 用法\n\n调用 init 函数初始化，然后调用 process 处理数据。\n\n详细信息参考 http://old-docs.example.com/v1 （已失效的链接）。\n\n## API\n\n### init(config)\n\n初始化。\n\n### process(data)\n\n处理数据。\n\n### transform(input, output, format, validate, compress, encrypt)\n\n转换数据格式。\n```",
+      "expected_output": "加载 doc-quality-checklist.md，识别出文档问题：缺少概述/目标读者（DOC-06）、无前置条件（DOC-07）、缺少示例（DOC-09）、API 参数未说明（DOC-09）、无错误处理/FAQ（DOC-10）、链接失效（DOC-18）。输出按严重程度分组的文档审查报告。",
+      "assertions": [
+        {
+          "id": "A3-01",
+          "text": "加载了 doc-quality-checklist.md",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A3-02",
+          "text": "发现了缺少概述或目标读者的问题并引用了 DOC-06",
+          "type": "checklist_ref",
+          "points": 7
+        },
+        {
+          "id": "A3-03",
+          "text": "发现了缺少代码示例的问题并引用了 DOC-09",
+          "type": "checklist_ref",
+          "points": 7
+        },
+        {
+          "id": "A3-04",
+          "text": "发现了链接可能失效的问题并引用了 DOC-18",
+          "type": "checklist_ref",
+          "points": 6
+        },
+        {
+          "id": "A3-05",
+          "text": "发现了 API 文档过于简略/无参数说明的问题",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A3-06",
+          "text": "报告有按严重程度分组的结构",
+          "type": "structural",
+          "points": 6
+        },
+        {
+          "id": "A3-07",
+          "text": "审查类型标注为文档质量检查/文档审查",
+          "type": "structural",
+          "points": 3
+        },
+        {
+          "id": "A3-08",
+          "text": "每个问题有修复建议",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A3-09",
+          "text": "总览部分有问题数量统计",
+          "type": "structural",
+          "points": 4
+        },
+        {
+          "id": "A3-10",
+          "text": "引用了至少 4 个不同的 DOC-xx 编号",
+          "type": "checklist_ref",
+          "points": 7
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "auto-detect-review-type",
+      "prompt": "帮我看看这段代码有没有问题：\n\n```python\nimport hashlib\nimport os\n\ndef register_user(username, password, email):\n    password_hash = hashlib.md5(password.encode()).hexdigest()\n    token = os.urandom(8).hex()\n    query = f\"INSERT INTO users (username, password, email, token) VALUES ('{username}', '{password_hash}', '{email}', '{token}')\"\n    db.execute(query)\n    log_file = open('/var/log/app.log', 'a')\n    log_file.write(f'New user registered: {username}, password: {password}, token: {token}\\n')\n    return {'status': 'ok', 'token': token}\n```",
+      "expected_output": "用户没有指定审查类型，但内容是 .py 代码且涉及安全问题。应加载 python-review-checklist.md，并可能组合加载 owasp-checklist.md（因为涉及认证/密码存储/SQL 注入）。识别出：MD5 弱哈希、SQL 注入、明文密码写日志、文件未用 with。",
+      "assertions": [
+        {
+          "id": "A4-01",
+          "text": "自动识别出需要 Python 代码审查（加载了 python-review-checklist.md）",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A4-02",
+          "text": "识别出也需要安全审查（加载了 owasp-checklist.md 或引用了 SEC-xx 编号）",
+          "type": "structural",
+          "points": 7
+        },
+        {
+          "id": "A4-03",
+          "text": "发现了 MD5 弱哈希问题",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A4-04",
+          "text": "发现了 SQL 注入问题并引用了 PY-24 或 SEC-09",
+          "type": "checklist_ref",
+          "points": 7
+        },
+        {
+          "id": "A4-05",
+          "text": "发现了明文密码写入日志的问题",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A4-06",
+          "text": "发现了文件未用 with 管理的问题并引用了 PY-15",
+          "type": "checklist_ref",
+          "points": 5
+        },
+        {
+          "id": "A4-07",
+          "text": "报告有按严重程度分组的结构",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A4-08",
+          "text": "每个问题有修复建议",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A4-09",
+          "text": "引用了至少 3 个不同的清单编号",
+          "type": "checklist_ref",
+          "points": 7
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "unsupported-review-type",
+      "prompt": "帮我做一下这段 Rust 代码的代码审查：\n\n```rust\nuse std::fs;\nuse std::io;\n\nfn read_config(path: &str) -> Result<String, io::Error> {\n    let content = fs::read_to_string(path)?;\n    Ok(content)\n}\n\nfn main() {\n    let config = read_config(\"/etc/app/config.toml\").unwrap();\n    println!(\"Config loaded: {} bytes\", config.len());\n}\n```",
+      "expected_output": "references/ 下没有 Rust 审查清单。应告知用户当前支持的审查类型（Python/安全/文档），并建议创建 Rust 清单。同时可以从通用编程角度给出一些建议（如 unwrap() 的风险）。",
+      "assertions": [
+        {
+          "id": "A5-01",
+          "text": "告知用户当前没有 Rust 专用的审查清单",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A5-02",
+          "text": "列出了当前支持的审查类型（提到了 Python / 安全 / 文档 中的至少两个）",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A5-03",
+          "text": "建议创建 Rust 审查清单（提到可以在 references/ 下新建）",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A5-04",
+          "text": "即便没有专用清单，仍从通用角度给出了代码建议（如 unwrap() 风险）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A5-05",
+          "text": "通用建议有一定深度（不是只说'代码看起来不错'）",
+          "type": "content",
+          "points": 6
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "skill_name": "skill-reviewer",
+  "total_score": {
+    "earned": 270,
+    "possible": 270,
+    "percentage": 100.0
+  },
+  "per_eval": [
+    {
+      "eval_id": 1,
+      "eval_name": "python-code-review-basic",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A1-01",
+          "text": "加载了 python-review-checklist.md",
+          "passed": true,
+          "evidence": "找到清单引用: ['python-review-checklist', 'python-review']"
+        },
+        {
+          "id": "A1-02",
+          "text": "包含报告模板结构",
+          "passed": true,
+          "evidence": "报告头部元素: ['审查报告', '审查类型', '总览']"
+        },
+        {
+          "id": "A1-03",
+          "text": "发现硬编码 API_KEY 问题",
+          "passed": true,
+          "evidence": "API_KEY 问题: True; 编号引用: 找到: ['PY-26']"
+        },
+        {
+          "id": "A1-04",
+          "text": "发现 SQL 注入问题",
+          "passed": true,
+          "evidence": "SQL 注入: True; PY-24: 找到 PY-24"
+        },
+        {
+          "id": "A1-05",
+          "text": "发现裸 except 或吞掉异常问题",
+          "passed": true,
+          "evidence": "异常处理问题: True; 编号: 找到: ['PY-11', 'PY-13']"
+        },
+        {
+          "id": "A1-06",
+          "text": "发现文件未用 with 管理",
+          "passed": true,
+          "evidence": "文件管理问题: True; PY-15: 找到 PY-15"
+        },
+        {
+          "id": "A1-07",
+          "text": "按严重程度分组",
+          "passed": true,
+          "evidence": "找到 3 个严重程度分组: ['严重', '警告', '建议']"
+        },
+        {
+          "id": "A1-08",
+          "text": "包含修复建议",
+          "passed": true,
+          "evidence": "修复建议关键词: ['修复建议', '改为', '使用', '修复']; 含代码示例: True"
+        },
+        {
+          "id": "A1-09",
+          "text": "总览有问题数量统计",
+          "passed": true,
+          "evidence": "找到统计: ['共发现 **12** 个问题', '发现 **12** 个问题', '严重 **5** 个']"
+        },
+        {
+          "id": "A1-10",
+          "text": "SQL 注入和 API_KEY 被标为严重",
+          "passed": true,
+          "evidence": "严重分组中: SQL=True, API_KEY=True"
+        }
+      ],
+      "score": {
+        "earned": 65,
+        "possible": 65,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "security-audit-api",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A2-01",
+          "text": "加载了 owasp-checklist.md",
+          "passed": true,
+          "evidence": "找到清单引用: ['owasp-checklist', 'owasp']"
+        },
+        {
+          "id": "A2-02",
+          "text": "发现 SQL 注入",
+          "passed": true,
+          "evidence": "SQL 注入: True; SEC-09: 找到 SEC-09"
+        },
+        {
+          "id": "A2-03",
+          "text": "发现命令注入",
+          "passed": true,
+          "evidence": "命令注入: True; SEC-10: 找到 SEC-10"
+        },
+        {
+          "id": "A2-04",
+          "text": "发现 pickle 反序列化问题",
+          "passed": true,
+          "evidence": "Pickle 问题: True; 编号: 找到: ['SEC-13']"
+        },
+        {
+          "id": "A2-05",
+          "text": "发现路径遍历问题",
+          "passed": true,
+          "evidence": "路径遍历: True; SEC-12: 找到 SEC-12"
+        },
+        {
+          "id": "A2-06",
+          "text": "发现 debug 模式或信息泄露",
+          "passed": true,
+          "evidence": "Debug/泄露: True; 编号: 找到: ['SEC-16']"
+        },
+        {
+          "id": "A2-07",
+          "text": "严重程度分组",
+          "passed": true,
+          "evidence": "找到 3 个严重程度分组: ['严重', '警告', '建议']"
+        },
+        {
+          "id": "A2-08",
+          "text": "审查类型标注为安全审计",
+          "passed": true,
+          "evidence": "审查类型标注: ['安全审计', 'security audit']"
+        },
+        {
+          "id": "A2-09",
+          "text": "修复建议含代码",
+          "passed": true,
+          "evidence": "修复建议关键词: ['修复建议', '修复方案', '改为', '使用', 'fix']; 含代码示例: True"
+        },
+        {
+          "id": "A2-10",
+          "text": "SQL/命令注入标为严重",
+          "passed": true,
+          "evidence": "严重分组: SQL=True, 命令注入=True"
+        }
+      ],
+      "score": {
+        "earned": 57,
+        "possible": 57,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "doc-quality-review",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A3-01",
+          "text": "加载了 doc-quality-checklist.md",
+          "passed": true,
+          "evidence": "找到清单引用: ['doc-quality-checklist', 'doc-quality']"
+        },
+        {
+          "id": "A3-02",
+          "text": "发现缺少概述/读者",
+          "passed": true,
+          "evidence": "概述问题: True; DOC-06: 找到 DOC-06"
+        },
+        {
+          "id": "A3-03",
+          "text": "发现缺少示例",
+          "passed": true,
+          "evidence": "示例问题: True; DOC-09: 找到 DOC-09"
+        },
+        {
+          "id": "A3-04",
+          "text": "发现链接失效问题",
+          "passed": true,
+          "evidence": "链接问题: True; DOC-18: 找到 DOC-18"
+        },
+        {
+          "id": "A3-05",
+          "text": "发现 API 文档过于简略",
+          "passed": true,
+          "evidence": "API 文档简略问题: True"
+        },
+        {
+          "id": "A3-06",
+          "text": "严重程度分组",
+          "passed": true,
+          "evidence": "找到 3 个严重程度分组: ['严重', '警告', '建议']"
+        },
+        {
+          "id": "A3-07",
+          "text": "审查类型标注为文档审查",
+          "passed": true,
+          "evidence": "审查类型标注: ['文档质量']"
+        },
+        {
+          "id": "A3-08",
+          "text": "含修复建议",
+          "passed": true,
+          "evidence": "修复建议关键词: ['修复建议', '替换为', '使用', '修复']; 含代码示例: True"
+        },
+        {
+          "id": "A3-09",
+          "text": "总览有问题统计",
+          "passed": true,
+          "evidence": "找到统计: ['共发现 10 个问题', '发现 10 个问题', '10 个问题']"
+        },
+        {
+          "id": "A3-10",
+          "text": "引用了 >=4 个 DOC-xx",
+          "passed": true,
+          "evidence": "找到 10 个 DOC-xx 编号: ['DOC-10', 'DOC-06', 'DOC-03', 'DOC-09', 'DOC-02', 'DOC-07', 'DOC-13', 'DOC-16', 'DOC-18', 'DOC-17']"
+        }
+      ],
+      "score": {
+        "earned": 55,
+        "possible": 55,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "auto-detect-review-type",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A4-01",
+          "text": "加载了 python-review-checklist",
+          "passed": true,
+          "evidence": "找到清单引用: ['python-review-checklist', 'python-review']"
+        },
+        {
+          "id": "A4-02",
+          "text": "识别出也需要安全审查",
+          "passed": true,
+          "evidence": "OWASP 清单: 找到清单引用: ['owasp-checklist', 'owasp']; SEC 编号: 找到 6 个 SEC-xx 编号: ['SEC-36', 'SEC-32', 'SEC-07', 'SEC-09', 'SEC-06', 'SEC-01']"
+        },
+        {
+          "id": "A4-03",
+          "text": "发现 MD5 弱哈希问题",
+          "passed": true,
+          "evidence": "MD5 弱哈希问题: True"
+        },
+        {
+          "id": "A4-04",
+          "text": "发现 SQL 注入",
+          "passed": true,
+          "evidence": "SQL 注入: True; 编号: 找到: ['PY-24', 'SEC-09']"
+        },
+        {
+          "id": "A4-05",
+          "text": "发现明文密码写入日志",
+          "passed": true,
+          "evidence": "明文密码写日志: True"
+        },
+        {
+          "id": "A4-06",
+          "text": "发现文件未用 with",
+          "passed": true,
+          "evidence": "文件管理: True; PY-15: 找到 PY-15"
+        },
+        {
+          "id": "A4-07",
+          "text": "严重程度分组",
+          "passed": true,
+          "evidence": "找到 3 个严重程度分组: ['严重', '警告', '建议']"
+        },
+        {
+          "id": "A4-08",
+          "text": "含修复建议",
+          "passed": true,
+          "evidence": "修复建议关键词: ['修复建议', '修复方案', '使用', '修复']; 含代码示例: True"
+        },
+        {
+          "id": "A4-09",
+          "text": "引用 >=3 个清单编号",
+          "passed": true,
+          "evidence": "PY-xx: 6 个, SEC-xx: 6 个, 总计: 12"
+        }
+      ],
+      "score": {
+        "earned": 55,
+        "possible": 55,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "unsupported-review-type",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A5-01",
+          "text": "告知无 Rust 清单",
+          "passed": true,
+          "evidence": "告知无 Rust 清单: True"
+        },
+        {
+          "id": "A5-02",
+          "text": "列出当前支持的类型",
+          "passed": true,
+          "evidence": "提到的支持类型: ['python', '安全', 'owasp', '文档', 'doc']"
+        },
+        {
+          "id": "A5-03",
+          "text": "建议创建 Rust 清单",
+          "passed": true,
+          "evidence": "建议创建清单: True"
+        },
+        {
+          "id": "A5-04",
+          "text": "给出通用代码建议",
+          "passed": true,
+          "evidence": "通用建议关键词: ['unwrap', 'panic', '错误处理', 'expect', 'Result', '?']"
+        },
+        {
+          "id": "A5-05",
+          "text": "建议有深度",
+          "passed": true,
+          "evidence": "内容长度: 3128 字符; 通用建议词: 6"
+        }
+      ],
+      "score": {
+        "earned": 38,
+        "possible": 38,
+        "percentage": 100.0
+      }
+    }
+  ]
+}
