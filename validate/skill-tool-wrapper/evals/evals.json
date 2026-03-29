@@ -1,0 +1,288 @@
+{
+  "skill_name": "skill-tool-wrapper",
+  "version": "1.0",
+  "description": "skill-tool-wrapper 的测试用例集，验证该 skill 作为元模式模板能否正确指导用户创建 Tool Wrapper 类 Skill",
+  "scoring": {
+    "total_points": 100,
+    "dimensions": {
+      "structure_compliance": {
+        "weight": 25,
+        "description": "输出是否遵循 Tool Wrapper 的标准目录结构（SKILL.md + references/ 三文件分工）"
+      },
+      "content_quality": {
+        "weight": 25,
+        "description": "生成的规范/最佳实践内容是否专业、具体、可操作"
+      },
+      "frontmatter_and_trigger": {
+        "weight": 20,
+        "description": "YAML frontmatter 是否正确，description 触发词是否覆盖中英文常见表达"
+      },
+      "progressive_loading": {
+        "weight": 15,
+        "description": "是否体现了渐进式加载策略，而非一次性全部加载"
+      },
+      "numbering_and_traceability": {
+        "weight": 15,
+        "description": "规则/实践是否有编号前缀，是否可追溯引用"
+      }
+    }
+  },
+  "evals": [
+    {
+      "id": 1,
+      "name": "basic-create-react-wrapper",
+      "prompt": "我们团队用 React + TypeScript 开发前端，有一套自己的组件规范和状态管理约定。帮我基于 tool-wrapper 模式创建一个 react-wrapper skill，把我们的前端规范封装进去。先帮我搭好骨架结构，规范内容你先用通用的 React 最佳实践填充，后面我再替换成我们自己的。",
+      "expected_output": "生成完整的 react-wrapper/ 目录结构，包含 SKILL.md（正确的 frontmatter + 工作流 + 渐进式加载策略）和 references/ 下的 conventions.md、best-practices.md、examples.md 三个文件，内容以 React+TS 为主题，每条规则有编号前缀",
+      "assertions": [
+        {
+          "id": "A1-01",
+          "text": "输出包含 SKILL.md 文件，有正确的 YAML frontmatter（name + description）",
+          "type": "structural",
+          "points": 10
+        },
+        {
+          "id": "A1-02",
+          "text": "SKILL.md 的 description 包含 React 相关的中英文触发词（如 React、组件、component、前端开发等）",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A1-03",
+          "text": "输出包含 references/ 目录下的至少 conventions.md 和 best-practices.md",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A1-04",
+          "text": "conventions.md 中每条规则有编号前缀（如 REACT-01、RC-01 等格式）",
+          "type": "structural",
+          "points": 7
+        },
+        {
+          "id": "A1-05",
+          "text": "conventions.md 包含至少 10 条具体规则",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A1-06",
+          "text": "SKILL.md 中包含渐进式加载策略（如表格或分步说明什么场景加载什么文件）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A1-07",
+          "text": "规范内容与 React+TypeScript 领域相关（不是通用编程规范）",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A1-08",
+          "text": "conventions.md 包含正确和错误示例的代码片段",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "complex-django-wrapper-with-team-rules",
+      "prompt": "我们公司用 Django REST Framework 做后端 API，有一些特殊约定：1) 所有接口必须用 ViewSet 而非 APIView；2) 序列化器必须继承自我们的 BaseSerializer，它会自动添加 created_at 和 updated_at；3) 权限类统一放在 permissions.py 里不允许内联写；4) URL 路由必须用 DefaultRouter 注册。帮我基于 tool-wrapper 模式创建一个 drf-wrapper skill，把这些团队规范封装进去，通用的 DRF 最佳实践也加上。",
+      "expected_output": "生成 drf-wrapper/ 结构，SKILL.md 含正确 frontmatter，conventions.md 包含用户提到的 4 条自定义规则并用编号标记，同时包含通用 DRF 规范；best-practices.md 包含 DRF 性能、安全、测试等最佳实践",
+      "assertions": [
+        {
+          "id": "A2-01",
+          "text": "conventions.md 包含用户提到的 4 条自定义团队规则（ViewSet、BaseSerializer、permissions.py、DefaultRouter）",
+          "type": "content",
+          "points": 12
+        },
+        {
+          "id": "A2-02",
+          "text": "自定义团队规则被清晰标记/区分于通用 DRF 规范（如用不同章节或特殊标注）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A2-03",
+          "text": "SKILL.md description 包含 Django、DRF、Django REST Framework 等触发词",
+          "type": "structural",
+          "points": 6
+        },
+        {
+          "id": "A2-04",
+          "text": "best-practices.md 包含 DRF 特有的最佳实践（如分页、节流、过滤后端等），而非通用 Python 实践",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A2-05",
+          "text": "所有规则/实践都有编号前缀，且自定义规则和通用规则的编号体系一致",
+          "type": "structural",
+          "points": 6
+        },
+        {
+          "id": "A2-06",
+          "text": "SKILL.md 包含渐进式加载策略",
+          "type": "content",
+          "points": 6
+        },
+        {
+          "id": "A2-07",
+          "text": "conventions.md 中自定义规则有正确/错误代码示例",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A2-08",
+          "text": "整体目录结构符合 tool-wrapper 模板（SKILL.md + references/ 下至少 2 个文件）",
+          "type": "structural",
+          "points": 7
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "non-code-tool-wrapper-terraform",
+      "prompt": "我想给 Terraform IaC 创建一个 tool-wrapper skill。我们团队的 Terraform 项目有这些要求：模块必须放在 modules/ 下，每个模块要有 README.md；变量命名用 snake_case 且必须有 description；state 文件必须用 S3 后端存储不允许本地 state；plan 输出必须保存为文件再 apply。帮我把这些和通用的 Terraform 最佳实践一起封装成 skill。",
+      "expected_output": "生成 terraform-wrapper/ 结构。这不是传统编程语言而是 IaC 工具，conventions.md 应侧重于 HCL 文件组织、命名、state 管理等而非编程风格；用户的 4 条自定义规则应被完整纳入且有编号",
+      "assertions": [
+        {
+          "id": "A3-01",
+          "text": "成功为非传统编程语言（Terraform/HCL）创建了 wrapper，内容不是生搬硬套编程语言规范",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A3-02",
+          "text": "conventions.md 包含用户提到的 4 条自定义规则（modules/ 目录、变量 description、S3 后端、plan 文件）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A3-03",
+          "text": "best-practices.md 包含 Terraform 特有的实践（如 module 版本锁定、workspace 使用、drift 检测等）",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A3-04",
+          "text": "所有规则有编号前缀",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A3-05",
+          "text": "SKILL.md description 包含 Terraform、IaC、基础设施即代码等触发词",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A3-06",
+          "text": "示例代码使用 HCL 语法而非 Python/JS 等",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A3-07",
+          "text": "SKILL.md 包含渐进式加载策略",
+          "type": "content",
+          "points": 5
+        },
+        {
+          "id": "A3-08",
+          "text": "整体目录结构符合 tool-wrapper 模板",
+          "type": "structural",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "ambiguous-request-no-explicit-wrapper",
+      "prompt": "我们团队新来了几个人，他们写 Go 的风格跟我们老人差别很大。我想搞一套规范让 AI 助手在帮他们写代码的时候自动按我们的风格来。大概包括：错误处理必须用 pkg/errors 包装；日志统一用 zap 不用 log 标准库；HTTP handler 的函数签名统一为 func(w http.ResponseWriter, r *http.Request)；配置用 viper 从 yaml 读取。有什么好办法吗？",
+      "expected_output": "能识别出用户的需求本质上就是 tool-wrapper 模式的使用场景，主动推荐使用此模式，并帮用户创建 go-wrapper skill。即使用户没有直接说'创建 wrapper skill'",
+      "assertions": [
+        {
+          "id": "A4-01",
+          "text": "识别出用户需求符合 tool-wrapper 模式，并明确推荐使用此模式",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A4-02",
+          "text": "生成了 Go wrapper 的 SKILL.md 或骨架结构",
+          "type": "structural",
+          "points": 8
+        },
+        {
+          "id": "A4-03",
+          "text": "conventions.md 包含用户提到的 4 条自定义规则（pkg/errors、zap、handler 签名、viper）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A4-04",
+          "text": "所有规则有编号前缀",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A4-05",
+          "text": "解释了 tool-wrapper 模式的优势（如按需加载、与 .cursorrules 的区别等）",
+          "type": "content",
+          "points": 7
+        },
+        {
+          "id": "A4-06",
+          "text": "conventions.md 中的 Go 代码示例语法正确",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "large-scope-split-guidance",
+      "prompt": "我要给 AWS CDK (TypeScript版本) 做一个 wrapper skill。内容很多：VPC 配置规范、Lambda 函数规范、DynamoDB 表设计规范、IAM 策略规范、CloudFront 分发规范、S3 存储桶规范、Step Functions 工作流规范、API Gateway 配置规范。每个服务的规范大概都有 30-50 条规则。你觉得怎么组织比较好？",
+      "expected_output": "能判断出内容量过大，不应塞进一个 conventions.md，而是推荐按服务拆分为多个 reference 文件；给出具体的文件拆分方案和 SKILL.md 中的按需加载策略",
+      "assertions": [
+        {
+          "id": "A5-01",
+          "text": "明确指出内容量过大，推荐拆分文件而非合并到一个 conventions.md",
+          "type": "content",
+          "points": 12
+        },
+        {
+          "id": "A5-02",
+          "text": "给出了具体的文件拆分方案（如 conventions-vpc.md、conventions-lambda.md 等按 AWS 服务拆分）",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A5-03",
+          "text": "SKILL.md 中的加载策略是按需加载（用户提到哪个服务就加载哪个文件），而非全部加载",
+          "type": "content",
+          "points": 10
+        },
+        {
+          "id": "A5-04",
+          "text": "给出了至少 2 个服务的 conventions 示范内容",
+          "type": "content",
+          "points": 8
+        },
+        {
+          "id": "A5-05",
+          "text": "description 中包含 AWS CDK、CDK、基础设施等触发词",
+          "type": "structural",
+          "points": 5
+        },
+        {
+          "id": "A5-06",
+          "text": "提到了 SKILL.md 中引用 300 行以上文件需要目录索引的建议",
+          "type": "content",
+          "points": 5
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,286 @@
+{
+  "skill_name": "skill-tool-wrapper",
+  "total_score": {
+    "earned": 270,
+    "possible": 270,
+    "percentage": 100.0
+  },
+  "per_eval": [
+    {
+      "eval_id": 1,
+      "eval_name": "basic-create-react-wrapper",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A1-01",
+          "text": "SKILL.md 有正确的 YAML frontmatter",
+          "passed": true,
+          "evidence": "YAML frontmatter 结构正确，包含 name 和 description"
+        },
+        {
+          "id": "A1-02",
+          "text": "description 包含 React 触发词",
+          "passed": true,
+          "evidence": "命中 6/6 个触发词。命中: ['React', '组件', 'component', '前端', 'TypeScript', 'frontend']"
+        },
+        {
+          "id": "A1-03",
+          "text": "包含 conventions.md 和 best-practices.md",
+          "passed": true,
+          "evidence": "references/ 下文件: ['references/best-practices.md', 'references/conventions.md']。conventions=True, best-practices=True"
+        },
+        {
+          "id": "A1-04",
+          "text": "规则有编号前缀",
+          "passed": true,
+          "evidence": "找到 24 条编号规则，示例: ['### REACT-01', '### REACT-02', '### REACT-03', '### REACT-04', '### REACT-05']"
+        },
+        {
+          "id": "A1-05",
+          "text": "conventions.md 包含至少 10 条规则",
+          "passed": true,
+          "evidence": "找到 24 条规则（最低要求 10）"
+        },
+        {
+          "id": "A1-06",
+          "text": "包含渐进式加载策略",
+          "passed": true,
+          "evidence": "找到 2 个渐进加载指标，匹配模式: ['\\\\|\\\\s*.*\\\\s*\\\\|\\\\s*.*加载.*\\\\|', '场景.*加载']"
+        },
+        {
+          "id": "A1-07",
+          "text": "内容与 React+TypeScript 相关",
+          "passed": true,
+          "evidence": "命中 8/8 个关键词: ['useState', 'useEffect', 'component', 'props', 'JSX', 'TSX', 'interface', 'React.FC']"
+        },
+        {
+          "id": "A1-08",
+          "text": "包含正确/错误代码示例",
+          "passed": true,
+          "evidence": "正确示例=True, 错误示例=True, 代码块数=18"
+        }
+      ],
+      "score": {
+        "earned": 60,
+        "possible": 60,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "complex-django-wrapper-with-team-rules",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A2-01",
+          "text": "包含 4 条自定义团队规则",
+          "passed": true,
+          "evidence": "命中 4/4 条自定义规则。命中: ['ViewSet', 'BaseSerializer', 'permissions.py', 'DefaultRouter']"
+        },
+        {
+          "id": "A2-02",
+          "text": "自定义规则被区分标记",
+          "passed": true,
+          "evidence": "找到团队/自定义标记: True (needs_review)"
+        },
+        {
+          "id": "A2-03",
+          "text": "description 包含 Django/DRF 触发词",
+          "passed": true,
+          "evidence": "命中 4/4 个触发词。命中: ['Django', 'DRF', 'REST Framework', 'django']"
+        },
+        {
+          "id": "A2-04",
+          "text": "best-practices 包含 DRF 特有实践",
+          "passed": true,
+          "evidence": "命中 7/7 个关键词: ['分页', 'pagination', 'throttl', 'filter', 'serializer', 'permission', 'viewset']"
+        },
+        {
+          "id": "A2-05",
+          "text": "规则有编号前缀",
+          "passed": true,
+          "evidence": "找到 42 条编号规则，示例: ['### BP-01', '### BP-02', '### BP-03', '### BP-04', '### BP-05']"
+        },
+        {
+          "id": "A2-06",
+          "text": "包含渐进式加载策略",
+          "passed": true,
+          "evidence": "找到 3 个渐进加载指标，匹配模式: ['\\\\|\\\\s*.*\\\\s*\\\\|\\\\s*.*加载.*\\\\|', '按需', '场景.*加载']"
+        },
+        {
+          "id": "A2-07",
+          "text": "自定义规则有代码示例",
+          "passed": true,
+          "evidence": "ViewSet+代码块=True, python 代码块数=27"
+        },
+        {
+          "id": "A2-08",
+          "text": "目录结构符合模板",
+          "passed": true,
+          "evidence": "SKILL.md=True, references/文件数=2"
+        }
+      ],
+      "score": {
+        "earned": 60,
+        "possible": 60,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "non-code-tool-wrapper-terraform",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A3-01",
+          "text": "为 Terraform/HCL 正确创建 wrapper",
+          "passed": true,
+          "evidence": "命中 10/10 个关键词: ['terraform', 'resource', 'module', 'provider', 'variable', 'output', 'state', 'backend', 'hcl', '.tf']"
+        },
+        {
+          "id": "A3-02",
+          "text": "包含 4 条自定义规则",
+          "passed": true,
+          "evidence": "命中 4/4 条自定义规则。命中: ['modules/', 'description', 'S3', 'plan']"
+        },
+        {
+          "id": "A3-03",
+          "text": "best-practices 包含 Terraform 特有实践",
+          "passed": true,
+          "evidence": "命中 6/9 个关键词: ['module', 'workspace', 'lock', '版本', 'version', 'plan']"
+        },
+        {
+          "id": "A3-04",
+          "text": "规则有编号前缀",
+          "passed": true,
+          "evidence": "找到 38 条编号规则，示例: ['### BP-01', '### BP-02', '### BP-03', '### BP-04', '### BP-05']"
+        },
+        {
+          "id": "A3-05",
+          "text": "description 包含 Terraform/IaC 触发词",
+          "passed": true,
+          "evidence": "命中 5/5 个触发词。命中: ['Terraform', 'IaC', '基础设施', 'terraform', 'infrastructure']"
+        },
+        {
+          "id": "A3-06",
+          "text": "代码示例使用 HCL 语法",
+          "passed": true,
+          "evidence": "HCL 代码块=30, terraform 代码块=0, 总计=30"
+        },
+        {
+          "id": "A3-07",
+          "text": "包含渐进式加载策略",
+          "passed": true,
+          "evidence": "找到 2 个渐进加载指标，匹配模式: ['\\\\|\\\\s*.*\\\\s*\\\\|\\\\s*.*加载.*\\\\|', '场景.*加载']"
+        },
+        {
+          "id": "A3-08",
+          "text": "目录结构符合模板",
+          "passed": true,
+          "evidence": "SKILL.md=True, references/文件数=2"
+        }
+      ],
+      "score": {
+        "earned": 55,
+        "possible": 55,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "ambiguous-request-no-explicit-wrapper",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A4-01",
+          "text": "识别需求并推荐 tool-wrapper 模式",
+          "passed": true,
+          "evidence": "命中 5/6 个关键词: ['tool-wrapper', '封装', 'wrapper', 'skill 模式', '按需加载'] (needs_review: 需人工确认对话中是否有推荐)"
+        },
+        {
+          "id": "A4-02",
+          "text": "生成了 Go wrapper 骨架",
+          "passed": true,
+          "evidence": "找到 SKILL.md=True"
+        },
+        {
+          "id": "A4-03",
+          "text": "包含 4 条自定义规则",
+          "passed": true,
+          "evidence": "命中 4/4 条自定义规则。命中: ['pkg/errors', 'zap', 'ResponseWriter', 'viper']"
+        },
+        {
+          "id": "A4-04",
+          "text": "规则有编号前缀",
+          "passed": true,
+          "evidence": "找到 18 条编号规则，示例: ['### BP-01', '### BP-02', '### BP-03', '### BP-04', '### BP-05']"
+        },
+        {
+          "id": "A4-05",
+          "text": "解释了 tool-wrapper 模式优势",
+          "passed": true,
+          "evidence": "命中 6/6 个关键词: ['按需加载', '上下文', 'context', '.cursorrules', 'CLAUDE.md', 'token'] (needs_review)"
+        },
+        {
+          "id": "A4-06",
+          "text": "Go 代码示例存在",
+          "passed": true,
+          "evidence": "Go 代码块数=24 (needs_review: 语法正确性需人工确认)"
+        }
+      ],
+      "score": {
+        "earned": 45,
+        "possible": 45,
+        "percentage": 100.0
+      }
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "large-scope-split-guidance",
+      "status": "graded",
+      "results": [
+        {
+          "id": "A5-01",
+          "text": "推荐拆分文件",
+          "passed": true,
+          "evidence": "命中 5/7 个关键词: ['拆分', '按服务', 'per service', '单独文件', '多个文件']"
+        },
+        {
+          "id": "A5-02",
+          "text": "给出具体文件拆分方案",
+          "passed": true,
+          "evidence": "找到 6 个服务的拆分文件/方案: ['vpc', 'lambda', 'dynamodb', 'iam', 'cloudfront', 's3']"
+        },
+        {
+          "id": "A5-03",
+          "text": "加载策略为按需加载",
+          "passed": true,
+          "evidence": "找到 3 个渐进加载指标，匹配模式: ['\\\\|\\\\s*.*\\\\s*\\\\|\\\\s*.*加载.*\\\\|', '按需', '加载.*策略']"
+        },
+        {
+          "id": "A5-04",
+          "text": "至少 2 个服务有示范内容",
+          "passed": true,
+          "evidence": "找到 3 个服务有实际规则内容"
+        },
+        {
+          "id": "A5-05",
+          "text": "description 包含 AWS CDK 触发词",
+          "passed": true,
+          "evidence": "命中 5/5 个触发词。命中: ['AWS CDK', 'CDK', '基础设施', 'infrastructure', 'AWS']"
+        },
+        {
+          "id": "A5-06",
+          "text": "提到大文件需要目录索引",
+          "passed": true,
+          "evidence": "提到 300 行限制=True, 提到目录/索引=True"
+        }
+      ],
+      "score": {
+        "earned": 50,
+        "possible": 50,
+        "percentage": 100.0
+      }
+    }
+  ]
+}
