@@ -1,0 +1,146 @@
+{
+  "skill_name": "skill-generator",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我创建一个 docker 部署的 skill，主要用来帮用户把应用容器化部署到服务器上，支持 docker compose 多服务编排",
+      "expected_output": "一个完整的 skill 目录，包含 SKILL.md（有正确的 frontmatter 和结构化的指令），可能包含 references/ 子目录存放 docker compose 模板",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且以 --- 开头的 YAML frontmatter",
+        "frontmatter 包含 name 字段，值为 kebab-case 格式",
+        "frontmatter 包含 description 字段，且长度在 50-200 词之间",
+        "description 中包含触发短语（如 docker, 容器化, 部署, compose）",
+        "description 中包含 'Use when' 或 'Use this skill when' 触发条件说明",
+        "SKILL.md body 有清晰的 markdown 标题结构（至少 3 个 ## 级标题）",
+        "包含具体可执行的步骤或工作流（不只是描述性文字）",
+        "包含至少一个代码示例或命令示例",
+        "YAML frontmatter 能被正确解析（无语法错误）",
+        "总行数不超过 500 行"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need a skill for doing code review. It should guide Claude through reviewing pull requests - checking code quality, security issues, performance problems, and style consistency. Something like what a senior engineer would look for.",
+      "expected_output": "一个 practice guide 模式的 skill，包含代码审查的多个维度检查清单，有 before/after 示例，结构清晰",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且有合法的 YAML frontmatter",
+        "frontmatter name 为 kebab-case 格式",
+        "description 覆盖 code review 相关的触发场景（如 review, PR, pull request）",
+        "description 包含反触发条件（Do NOT use for）",
+        "body 包含代码质量检查的具体维度（如安全、性能、风格中至少 3 个）",
+        "包含结构化的检查清单或决策表",
+        "包含具体的代码示例（好/坏对比）",
+        "使用祈使语气编写指令（如 Check, Verify, Review）",
+        "指令中解释了 why（为什么要做某个检查）而不只是列规则"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "做一个简单的 skill，就是帮我把 markdown 文件转成带目录的 HTML，要支持代码高亮和数学公式",
+      "expected_output": "一个 tool wrapper 模式的 skill，简洁紧凑，包含具体的转换命令和选项说明",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且有合法的 YAML frontmatter",
+        "frontmatter name 为 kebab-case 格式",
+        "description 提到 markdown, HTML, 转换相关的触发词",
+        "body 结构紧凑（tool wrapper 模式，100 行左右为佳，不超过 200 行）",
+        "包含具体的转换工具或脚本的使用说明",
+        "提到代码高亮的处理方式",
+        "提到数学公式的处理方式",
+        "包含至少一个完整的使用示例（输入 -> 输出）",
+        "如有脚本文件引用则对应文件实际存在"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "yo can you make me a skill that helps with database migrations? like when i need to change my postgres schema, add columns, create tables, handle rollbacks etc. i use knex for migrations in my node project",
+      "expected_output": "一个 tool wrapper 或 practice guide 模式的 skill，聚焦 Knex 迁移工作流，包含具体命令和安全规则",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且有合法的 YAML frontmatter",
+        "frontmatter name 为 kebab-case 格式",
+        "description 覆盖 database migration 相关触发词（如 migration, schema, knex, 数据库）",
+        "description 包含反触发条件",
+        "提到 knex 的具体迁移命令（如 knex migrate:make, knex migrate:latest）",
+        "包含 rollback 的处理方式和注意事项",
+        "包含数据安全相关的警告（如备份、不可逆操作提醒）",
+        "使用祈使语气编写指令",
+        "包含至少一个完整的迁移文件示例",
+        "总行数不超过 500 行"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Create a skill for managing cloud infrastructure across AWS, GCP, and Azure. It should help users choose the right cloud provider's services, set up infrastructure with Terraform, and follow cloud-native best practices. Each cloud provider should have its own reference doc.",
+      "expected_output": "一个 reference lookup 模式的 skill，SKILL.md 包含选择逻辑和通用流程，references/ 下有 aws.md, gcp.md, azure.md",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且有合法的 YAML frontmatter",
+        "frontmatter name 为 kebab-case 格式",
+        "description 覆盖 cloud, infrastructure, terraform, AWS, GCP, Azure 等触发词",
+        "description 包含反触发条件",
+        "body 包含云服务商选择的决策表或对比矩阵",
+        "references/ 目录下有至少 2 个独立的云服务商参考文件",
+        "SKILL.md 中有明确的指针说明何时读取哪个 reference 文件",
+        "提到 Terraform 的具体用法或工作流",
+        "所有 references/ 下引用的文件实际存在",
+        "使用 progressive disclosure（SKILL.md 保持精简，详细内容在 references/ 中）"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "写个 skill 帮我做 React 组件的无障碍性检查，就是 accessibility / a11y 那套。要能检查 ARIA 属性、键盘导航、颜色对比度、屏幕阅读器兼容性这些，最好有具体的修复建议和 before/after 代码对比",
+      "expected_output": "practice guide 模式的 skill，包含 a11y 检查维度、React 特定的 ARIA 用法、代码对比示例",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且有合法的 YAML frontmatter",
+        "frontmatter name 为 kebab-case 格式",
+        "description 覆盖 accessibility, a11y, 无障碍, ARIA 等触发词",
+        "description 包含反触发条件",
+        "body 覆盖 ARIA 属性、键盘导航、颜色对比度、屏幕阅读器中至少 3 个维度",
+        "包含 React 特定的 JSX/TSX 代码示例",
+        "包含 before/after 的代码对比（不合规 vs 合规）",
+        "使用祈使语气编写指令",
+        "解释了 why（为什么某个 ARIA 属性重要，而不只是列规则）"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "make a skill for git workflow management. our team uses a gitflow-like branching model with feature branches, release branches, and hotfixes. the skill should help with branch naming conventions, commit message formatting (conventional commits), PR templates, and release tagging. keep it lean.",
+      "expected_output": "practice guide 模式的 skill，聚焦 git 工作流规范，结构紧凑",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且有合法的 YAML frontmatter",
+        "frontmatter name 为 kebab-case 格式",
+        "description 覆盖 git, branch, commit, workflow 等触发词",
+        "description 包含反触发条件",
+        "包含分支命名规范（feature/, release/, hotfix/ 等）",
+        "包含 conventional commits 格式说明和示例",
+        "包含 PR 模板或 PR 检查清单",
+        "包含 release/tag 的流程说明",
+        "body 保持精简（用户说了 keep it lean，不应超过 250 行）",
+        "使用祈使语气编写指令"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "我需要一个 skill 来帮助处理 API 限流和重试策略。就是当调用第三方 API 被 rate limit 了之后，怎么做 exponential backoff、怎么用 circuit breaker pattern、怎么设计 retry queue。要支持 Python 和 Node.js 两种语言的实现。",
+      "expected_output": "practice guide 或 reference lookup 模式的 skill，包含限流策略的理论和双语言实现",
+      "files": [],
+      "expectations": [
+        "SKILL.md 存在且有合法的 YAML frontmatter",
+        "frontmatter name 为 kebab-case 格式",
+        "description 覆盖 rate limit, retry, backoff, circuit breaker, 限流 等触发词",
+        "description 包含反触发条件",
+        "包含 exponential backoff 的具体实现或算法说明",
+        "包含 circuit breaker pattern 的说明",
+        "包含 Python 的代码示例",
+        "包含 Node.js/JavaScript 的代码示例",
+        "解释了 why（为什么要用指数退避而不是固定间隔等）",
+        "使用祈使语气编写指令"
+      ]
+    }
+  ]
+}

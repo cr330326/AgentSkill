@@ -1,0 +1,769 @@
+{
+  "metadata": {
+    "skill_name": "skill-generator",
+    "skill_path": "/Users/vsh9p8q/AI/Project/AgentSkills/validate/skill-generator",
+    "executor_model": "claude-opus-4.6",
+    "analyzer_model": "claude-opus-4.6",
+    "timestamp": "2026-03-29T18:00:00Z",
+    "evals_run": [1, 2, 3, 4, 5, 6, 7, 8],
+    "runs_per_configuration": 1,
+    "scoring_dimensions": [
+      "structure_compliance",
+      "trigger_quality",
+      "instruction_actionability",
+      "content_completeness",
+      "pattern_fitness"
+    ]
+  },
+
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "docker-deploy",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 25
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=docker-deploy (kebab-case); desc=107 words (in 50-150 range); has 'Use this skill when'; has 'Do NOT use for'; no empty dirs; all refs exist (2/2); proper subdirectory structure",
+        "trigger_quality": "desc covers docker/compose/容器化/部署/dockerize; bilingual triggers (EN+CN); anti-triggers for K8s, CI/CD, cloud-managed; disambiguates from related skills",
+        "instruction_actionability": "5 workflow phases with imperative steps; 14 code blocks; troubleshooting table; output checklist; decision table for base images; explains WHY (multi-stage builds for image size, healthchecks for reliability)",
+        "content_completeness": "covers Dockerfile, docker-compose, .dockerignore, .env, deploy scripts, SSL, nginx reverse proxy, common patterns (dev vs prod), troubleshooting; references for nginx-config and ssl-setup",
+        "pattern_fitness": "Process workflow pattern (correct for multi-phase deploy); 415 lines (under 500); progressive disclosure via references/; clear phase-based structure"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, starts with ---"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: docker-deploy"},
+        {"text": "description 50-200 words", "passed": true, "evidence": "107 words"},
+        {"text": "description contains trigger phrases", "passed": true, "evidence": "Contains docker, containerize, compose, 容器化, 部署"},
+        {"text": "description contains 'Use when'", "passed": true, "evidence": "Use this skill when the user wants to dockerize"},
+        {"text": "At least 3 ## headings", "passed": true, "evidence": "10 ## headings"},
+        {"text": "Contains executable steps", "passed": true, "evidence": "5-phase workflow with imperative instructions"},
+        {"text": "Contains code examples", "passed": true, "evidence": "14 code blocks"},
+        {"text": "YAML frontmatter parseable", "passed": true, "evidence": "quick_validate.py PASS"},
+        {"text": "Under 500 lines", "passed": true, "evidence": "415 lines"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "docker-deploy",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 8,
+        "failed": 2,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 3.5,
+        "trigger_quality": 3,
+        "instruction_actionability": 4,
+        "content_completeness": 4.5,
+        "pattern_fitness": 3.5,
+        "total": 18.5
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; kebab-case name; desc=62 words (slightly short); has 'Use when' but NO anti-trigger in desc; flat file structure (no skill subdirectory); refs all exist (4/4)",
+        "trigger_quality": "covers docker/compose/部署 but only 62 words; anti-trigger exists in body ('OUT OF SCOPE') but NOT in description field; won't prevent false triggers",
+        "instruction_actionability": "7-phase workflow; imperative voice; 11 code blocks; troubleshooting table; but heavy on ALWAYS/NEVER rules (9 strict rules) rather than explaining reasoning",
+        "content_completeness": "very thorough - covers Dockerfile templates for 10 stacks, compose services, CI/CD, deploy scripts; possibly over-complete with 4 reference files",
+        "pattern_fitness": "process workflow structure (appropriate) but flat directory (no skill subdirectory wrapper); 345 lines (good length); references well-organized"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, starts with ---"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: docker-deploy"},
+        {"text": "description 50-200 words", "passed": true, "evidence": "62 words (borderline short)"},
+        {"text": "description contains trigger phrases", "passed": true, "evidence": "Contains docker, compose, 部署"},
+        {"text": "description contains 'Use when'", "passed": true, "evidence": "Use when user asks to"},
+        {"text": "At least 3 ## headings", "passed": true, "evidence": "5 ## headings"},
+        {"text": "Contains executable steps", "passed": true, "evidence": "7-phase workflow"},
+        {"text": "Contains code examples", "passed": true, "evidence": "11 code blocks"},
+        {"text": "YAML frontmatter parseable", "passed": true, "evidence": "quick_validate.py PASS"},
+        {"text": "Under 500 lines", "passed": true, "evidence": "345 lines"}
+      ],
+      "notes": ["No anti-trigger in description field", "Flat directory structure instead of skill subdirectory"]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "code-review",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 25
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=code-review (kebab-case); desc=104 words; has 'Use this skill when'; has 'Do NOT use for' (3 anti-triggers); proper skill subdirectory; refs exist (1/1)",
+        "trigger_quality": "covers review/PR/pull request/code quality/diff; anti-triggers for code-refactoring and testing-strategies (names competing skills!); 104 words with comprehensive coverage",
+        "instruction_actionability": "6-step workflow; imperative voice throughout; 4 code examples; severity classification table; language-specific decision table; review etiquette with WHY; constraints section",
+        "content_completeness": "all 4 requested dimensions (quality, security, performance, style); plus review etiquette, severity classification, language-specific checks, troubleshooting; security-checklist.md reference",
+        "pattern_fitness": "practice guide pattern (perfect for methodology); 228 lines (ideal for practice guide); clear section hierarchy; constraints + troubleshooting"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: code-review"},
+        {"text": "description covers review/PR triggers", "passed": true, "evidence": "Contains review, PR, pull request, code quality"},
+        {"text": "description has anti-trigger", "passed": true, "evidence": "Do NOT use for writing new code, refactoring, running tests"},
+        {"text": "covers quality/security/performance/style", "passed": true, "evidence": "All 4 dimensions present as workflow steps"},
+        {"text": "has structured checklist or decision table", "passed": true, "evidence": "Severity classification table + language-specific table"},
+        {"text": "has code examples (good/bad)", "passed": true, "evidence": "Two concrete review finding examples"},
+        {"text": "uses imperative voice", "passed": true, "evidence": "Check, Read, Run, Identify, Flag throughout"},
+        {"text": "explains WHY", "passed": true, "evidence": "Core principles section; review etiquette explains reasoning"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "code-review",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.56,
+        "passed": 5,
+        "failed": 4,
+        "total": 9,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 3,
+        "trigger_quality": 2,
+        "instruction_actionability": 3.5,
+        "content_completeness": 4,
+        "pattern_fitness": 3,
+        "total": 15.5
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; kebab-case name; desc=39 words (too short); NO 'Use when' in desc; NO anti-trigger in desc; flat structure; checklist.md not in references/ dir",
+        "trigger_quality": "desc only 39 words; no trigger phrases in quotes; no anti-trigger; no differentiation from similar skills; desc is purely functional ('guides Claude through reviewing PRs')",
+        "instruction_actionability": "4-phase workflow; mixed voice (starts with 'You are a senior software engineer' persona); 5 code blocks; anti-pattern reference table; but 'always flag' rules without explaining why",
+        "content_completeness": "covers quality, security, performance, style; language-specific checks; anti-patterns; example output; but security section is lighter than with_skill version",
+        "pattern_fitness": "practice guide structure (appropriate) but 322 lines (slightly long for the depth); uses persona framing ('You are...') which is less effective than imperative instructions"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: code-review"},
+        {"text": "description covers review/PR triggers", "passed": false, "evidence": "Only 39 words, generic description without specific trigger phrases"},
+        {"text": "description has anti-trigger", "passed": false, "evidence": "No 'Do NOT use' in description"},
+        {"text": "covers quality/security/performance/style", "passed": true, "evidence": "All 4 present"},
+        {"text": "has structured checklist or decision table", "passed": true, "evidence": "Anti-patterns table exists"},
+        {"text": "has code examples (good/bad)", "passed": true, "evidence": "Example review output present"},
+        {"text": "uses imperative voice", "passed": false, "evidence": "Mixed - uses 'You are a senior software engineer' persona"},
+        {"text": "explains WHY", "passed": false, "evidence": "Rules stated without reasoning in most cases"}
+      ],
+      "notes": ["Description too short at 39 words", "Uses persona framing instead of imperative", "No anti-trigger or trigger phrases in description"]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "md-to-html",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 4.5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 24.5
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=md-to-html (kebab-case); desc=93 words; has 'Use this skill when'; has 'Do NOT use for' (2 anti-triggers); proper subdirectory; script exists (1/1)",
+        "trigger_quality": "covers markdown/HTML/转换/convert/代码高亮/数学公式; bilingual (EN+CN); anti-triggers for WeChat publishing and markdown editing; 93 words comprehensive",
+        "instruction_actionability": "3-step workflow; imperative voice; 5 code blocks; options table; tips section; but slightly less depth than ideal on the conversion script internals",
+        "content_completeness": "covers TOC, code highlighting (highlight.js), math (KaTeX); prerequisites; complete example (input→output); bundled convert.mjs script; options table",
+        "pattern_fitness": "tool wrapper pattern (perfect for this use case); 149 lines (ideal range for tool wrapper 60-120 target, slightly over but justified); clean structure"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: md-to-html"},
+        {"text": "description mentions markdown/HTML triggers", "passed": true, "evidence": "Contains markdown, HTML, 转换, convert"},
+        {"text": "body is compact (tool wrapper)", "passed": true, "evidence": "149 lines"},
+        {"text": "conversion tool usage explained", "passed": true, "evidence": "scripts/convert.mjs with full instructions"},
+        {"text": "code highlighting mentioned", "passed": true, "evidence": "highlight.js integration documented"},
+        {"text": "math formula mentioned", "passed": true, "evidence": "KaTeX integration documented"},
+        {"text": "complete usage example", "passed": true, "evidence": "Input markdown → output HTML example"},
+        {"text": "referenced script exists", "passed": true, "evidence": "scripts/convert.mjs exists"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "md-to-html",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.78,
+        "passed": 7,
+        "failed": 2,
+        "total": 9,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 3.5,
+        "trigger_quality": 2.5,
+        "instruction_actionability": 4,
+        "content_completeness": 4.5,
+        "pattern_fitness": 3.5,
+        "total": 18
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; kebab-case name; desc=43 words (short); has 'Use when' but NO anti-trigger; flat structure (convert.mjs and template.html at root, not in scripts/); files exist",
+        "trigger_quality": "desc 43 words; covers markdown/HTML/convert but lacks bilingual triggers; no anti-trigger; no competing skill disambiguation",
+        "instruction_actionability": "4-step workflow; imperative voice; 6 code blocks; options table; error handling table; clear and actionable",
+        "content_completeness": "covers code highlighting (highlight.js), math (KaTeX), TOC; prerequisites; example; limitations section; template.html with CSS themes; very functional",
+        "pattern_fitness": "tool wrapper structure (correct); 117 lines (ideal); but files not in proper subdirectories (convert.mjs at root instead of scripts/)"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: md-to-html"},
+        {"text": "description mentions markdown/HTML triggers", "passed": true, "evidence": "Contains markdown, HTML, convert"},
+        {"text": "body is compact (tool wrapper)", "passed": true, "evidence": "117 lines"},
+        {"text": "conversion tool usage explained", "passed": true, "evidence": "convert.mjs with instructions"},
+        {"text": "code highlighting mentioned", "passed": true, "evidence": "highlight.js documented"},
+        {"text": "math formula mentioned", "passed": true, "evidence": "KaTeX documented"},
+        {"text": "complete usage example", "passed": true, "evidence": "bash command example present"},
+        {"text": "referenced script exists", "passed": false, "evidence": "convert.mjs at root not in scripts/ directory; SKILL.md references it correctly but structure is non-standard"}
+      ],
+      "notes": ["Files placed at root instead of in scripts/ directory", "No anti-trigger in description"]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "db-migrations",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 25
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=db-migrations (kebab-case); desc=117 words (in 50-150 range); has 'Use this skill when' variant via trigger phrases; has 'Do NOT use for' with Prisma/TypeORM/Sequelize anti-triggers; proper subdirectory structure; refs exist (1/1: references/pg-column-types.md)",
+        "trigger_quality": "desc=117 words covering knex migrate/schema change/add column/create table/database migration/rollback migration/alter table/drop column/knex seed/squash migrations/data migrations; explicit anti-triggers for Prisma/TypeORM/Sequelize (competing ORMs); clear scope boundary for general SQL queries",
+        "instruction_actionability": "6-step workflow with imperative voice throughout; 14 code blocks (1 bash, 1 ts, 12 js); naming convention table; troubleshooting table (6 entries); decision guide table (schema builder vs raw SQL); explains WHY (reversibility, idempotent safety, data preservation, transactions)",
+        "content_completeness": "covers all requested: knex migrate:make/migrate:latest commands; rollback with safety rules; 7 common schema operations (add column, NOT NULL, rename, change type, index, unique, enum); knexfile config; data safety warnings (backup, staging test); troubleshooting; reference for PG column types",
+        "pattern_fitness": "practice guide pattern (correct for methodology-heavy migration workflow); 336 lines (well under 500); progressive disclosure via references/pg-column-types.md; clear phase-based structure with Why→Workflow→Troubleshooting→Decision Guide→Reference"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, starts with --- YAML frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: db-migrations"},
+        {"text": "description covers migration triggers", "passed": true, "evidence": "Contains migration, schema, knex, database, add column, create table, rollback"},
+        {"text": "description has anti-trigger", "passed": true, "evidence": "Do NOT use for ORM query building, Prisma/TypeORM/Sequelize migrations"},
+        {"text": "mentions knex migrate commands", "passed": true, "evidence": "knex migrate:make and knex migrate:latest documented with CLI reference table"},
+        {"text": "covers rollback handling", "passed": true, "evidence": "Step 5 dedicated to rollback safety with backup/testing checklist"},
+        {"text": "contains data safety warnings", "passed": true, "evidence": "'Take a database backup', 'Test on a staging copy first', reversibility principles"},
+        {"text": "uses imperative voice", "passed": true, "evidence": "Write, Run, Use, Always write, Take, Test, Ensure throughout"},
+        {"text": "has complete migration file example", "passed": true, "evidence": "12 JS code blocks with full up/down migration examples"},
+        {"text": "under 500 lines", "passed": true, "evidence": "336 lines"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "db-migrations",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.7,
+        "passed": 7,
+        "failed": 3,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 3.5,
+        "trigger_quality": 3.5,
+        "instruction_actionability": 4,
+        "content_completeness": 4.5,
+        "pattern_fitness": 3,
+        "total": 18.5
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=db-migrations (kebab-case); desc=68 words (in range but shorter); has 'Use when' trigger phrases; NO anti-trigger in description; has references/ dir with 2 files (common-patterns.md, knex-pg-types.md) but SKILL.md does NOT reference them",
+        "trigger_quality": "desc=68 words covering migration/schema/knex/database/add column/create table/rollback/add index/rename column; no anti-trigger to exclude Prisma/TypeORM/Sequelize; adequate but not comprehensive",
+        "instruction_actionability": "8 ## headings with imperative voice; 23 code blocks (very thorough); 8-item workflow checklist; troubleshooting section; but uses 'NON-NEGOTIABLE' / 'Critical Rules' language — heavy-handed rather than explaining reasoning",
+        "content_completeness": "very thorough — 12 schema operations, CLI commands, naming conventions, JS+TS boilerplate, batched data backfill, troubleshooting; possibly over-complete at 502 lines; references exist but orphaned (not linked from SKILL.md)",
+        "pattern_fitness": "practice guide structure (appropriate) but 502 lines — barely at the 500-line limit; references/ exists with 2 files but not linked from SKILL.md, defeating progressive disclosure; uses 'NON-NEGOTIABLE' tone instead of explanatory approach"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, starts with --- YAML frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: db-migrations"},
+        {"text": "description covers migration triggers", "passed": true, "evidence": "Contains migration, schema, knex, database, add column, create table"},
+        {"text": "description has anti-trigger", "passed": false, "evidence": "No 'Do NOT use' or anti-trigger in description field"},
+        {"text": "mentions knex migrate commands", "passed": true, "evidence": "knex migrate:make, knex migrate:latest, knex migrate:rollback documented"},
+        {"text": "covers rollback handling", "passed": true, "evidence": "Critical Rules section covers rollback; troubleshooting mentions partial failures"},
+        {"text": "contains data safety warnings", "passed": true, "evidence": "'Never modify a migration that has been run', backup mentioned in checklist"},
+        {"text": "uses imperative voice", "passed": true, "evidence": "Follow, Discover, Generate, Use, Never throughout"},
+        {"text": "has complete migration file example", "passed": true, "evidence": "23 code blocks with extensive examples"},
+        {"text": "under 500 lines", "passed": false, "evidence": "502 lines — barely over the 500-line limit"}
+      ],
+      "notes": ["No anti-trigger in description", "502 lines slightly exceeds 500-line limit", "references/ dir has 2 files but SKILL.md never links to them", "Uses 'NON-NEGOTIABLE' / 'Critical Rules' heavy-handed tone"]
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "cloud-infra",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 4.5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 24.5
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=cloud-infra (kebab-case); desc=119 words (in 50-150 range); has trigger phrases 'Use when the user asks to'; has 'Do NOT use for' with CI/CD anti-trigger; proper subdirectory; all refs exist (3/3: aws.md, gcp.md, azure.md)",
+        "trigger_quality": "desc=119 words covering set up infrastructure/choose cloud provider/compare AWS vs GCP vs Azure/write Terraform/provision cloud resources/cloud-native architecture/IaC setup/S3 vs GCS vs Blob Storage/EKS vs GKE vs AKS/multi-cloud/cost optimization/security hardening; anti-triggers for CI/CD, container orchestration beyond managed K8s, app-level code",
+        "instruction_actionability": "5-phase workflow; imperative voice ('Before recommending anything, establish these facts', 'Do not guess', 'Follow these rules'); 4 HCL code blocks; provider comparison table (13 rows); 3 checklists (security 7 items, reliability 5, cost 6); explains WHY implicitly via checklists",
+        "content_completeness": "covers all requested: provider comparison matrix, Terraform configs for all 3 providers, cloud-native best practices (security/reliability/cost); references/ with per-provider deep dives; decision flow (Phase 1 clarification); validation checklist",
+        "pattern_fitness": "reference lookup pattern (correct — SKILL.md has decision logic, references/ has provider details); 233 lines (compact for the scope); progressive disclosure well-executed with 3 provider reference files"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter with > block scalar"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: cloud-infra"},
+        {"text": "description covers cloud/infra/terraform triggers", "passed": true, "evidence": "Contains cloud, infrastructure, Terraform, AWS, GCP, Azure, IaC, multi-cloud"},
+        {"text": "description has anti-trigger", "passed": true, "evidence": "Do NOT use for CI/CD pipeline setup, container orchestration, application-level code"},
+        {"text": "contains provider comparison table", "passed": true, "evidence": "13-row core service comparison table (AWS vs GCP vs Azure)"},
+        {"text": "references/ has per-provider files", "passed": true, "evidence": "references/aws.md, references/gcp.md, references/azure.md all exist"},
+        {"text": "SKILL.md has pointers to references", "passed": true, "evidence": "Phase 2 explicitly directs to 'Read the provider reference file'"},
+        {"text": "mentions Terraform usage", "passed": true, "evidence": "Phase 3 with 3 HCL code blocks + 10 best practices"},
+        {"text": "all referenced files exist", "passed": true, "evidence": "3/3 reference files verified on disk"},
+        {"text": "uses progressive disclosure", "passed": true, "evidence": "SKILL.md=233 lines (compact), detail pushed to 3 reference files"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "cloud-infra",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.7,
+        "passed": 7,
+        "failed": 3,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 4,
+        "trigger_quality": 3,
+        "instruction_actionability": 3,
+        "content_completeness": 3.5,
+        "pattern_fitness": 3.5,
+        "total": 17
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=cloud-infra (kebab-case); desc=57 words (short but in range); has 'Use when' but NO anti-trigger in description; proper references/ directory; all 4 refs exist (aws-services.md, gcp-services.md, azure-services.md, terraform-patterns.md)",
+        "trigger_quality": "desc=57 words covering cloud infrastructure/Terraform/multi-cloud/AWS/GCP/Azure/IaC/cloud migration/cloud architecture; no anti-trigger; no specific service comparisons (S3 vs GCS etc.); adequate but not comprehensive",
+        "instruction_actionability": "5-step workflow with imperative voice; only 2 code blocks; relies heavily on references for substance — SKILL.md body is thin at 127 lines; uses persona framing ('You are an expert cloud infrastructure architect'); comparison table template shown but not filled in",
+        "content_completeness": "has workflow and references for all 3 providers + terraform patterns; but SKILL.md body is sparse — comparison table is a template not actual data; security/reliability/cost covered only as bullet points in Step 5; no inline Terraform examples",
+        "pattern_fitness": "reference lookup structure (appropriate); but 127 lines is too thin — pushes too much to references without enough decision logic in SKILL.md; 4 reference files (good) but SKILL.md lacks the comparison matrix that should live there"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: cloud-infra"},
+        {"text": "description covers cloud/infra/terraform triggers", "passed": true, "evidence": "Contains cloud infrastructure, Terraform, multi-cloud, AWS, GCP, Azure, IaC"},
+        {"text": "description has anti-trigger", "passed": false, "evidence": "No 'Do NOT use' in description"},
+        {"text": "contains provider comparison table", "passed": false, "evidence": "Only a template/skeleton for comparison table, not filled in with actual data"},
+        {"text": "references/ has per-provider files", "passed": true, "evidence": "aws-services.md, gcp-services.md, azure-services.md all exist"},
+        {"text": "SKILL.md has pointers to references", "passed": true, "evidence": "Reference Files section lists all 4 files with when to load them"},
+        {"text": "mentions Terraform usage", "passed": true, "evidence": "Step 4 covers Terraform project layout and conventions"},
+        {"text": "all referenced files exist", "passed": true, "evidence": "4/4 reference files verified on disk"},
+        {"text": "uses progressive disclosure", "passed": false, "evidence": "Over-delegated — SKILL.md too thin (127 lines), comparison data should be in SKILL.md not only in references"}
+      ],
+      "notes": ["Uses persona framing ('You are an expert')", "SKILL.md body too thin at 127 lines", "Comparison table is a template not filled with data", "No anti-trigger in description"]
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "react-a11y",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 9,
+        "failed": 0,
+        "total": 9,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 25
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=react-a11y-audit (kebab-case); desc=72 words (in 50-150 range); has trigger phrases with 'Use when user asks to'; has 'Do NOT use for' (native mobile a11y, PDF a11y); proper subdirectory; ref exists (1/1: references/component-patterns.md)",
+        "trigger_quality": "desc=72 words covering check accessibility/audit a11y/fix ARIA/keyboard navigation/screen reader support/color contrast check/WCAG compliance/make component accessible; anti-triggers for native mobile (iOS VoiceOver/Android TalkBack) and PDF accessibility; clear scope boundary",
+        "instruction_actionability": "4-step workflow; imperative voice throughout ('Determine', 'Inspect', 'Check', 'Ensure', 'Verify', 'Produce', 'Fix'); 13 code blocks with before/after JSX comparisons; 4-dimension audit tables with severity levels; structured report template; tooling integration with eslint command",
+        "content_completeness": "covers all 4 requested dimensions: ARIA attributes (dimension A), keyboard navigation (dimension B), color contrast (dimension C), screen reader compatibility (dimension D); before/after code pairs; severity classification (Critical/Serious/Moderate/Minor); report template; tooling (eslint-plugin-jsx-a11y, @axe-core/react, Lighthouse)",
+        "pattern_fitness": "practice guide pattern (perfect for audit methodology); 369 lines (appropriate for the depth of 4 audit dimensions); progressive disclosure to references/component-patterns.md for common ARIA patterns; clear section hierarchy"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter with > block scalar"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: react-a11y-audit"},
+        {"text": "description covers a11y triggers", "passed": true, "evidence": "Contains accessibility, a11y, ARIA, keyboard navigation, screen reader, color contrast, WCAG"},
+        {"text": "description has anti-trigger", "passed": true, "evidence": "Do NOT use for native mobile accessibility or PDF accessibility"},
+        {"text": "covers ARIA/keyboard/contrast/screen reader dimensions", "passed": true, "evidence": "All 4 dimensions as labeled audit sections (A, B, C, D)"},
+        {"text": "has React JSX/TSX code examples", "passed": true, "evidence": "13 code blocks with JSX before/after comparisons"},
+        {"text": "has before/after code comparison", "passed": true, "evidence": "Multiple Bad→Good code pairs in each dimension"},
+        {"text": "uses imperative voice", "passed": true, "evidence": "Determine, Inspect, Check, Ensure, Verify, Produce, Fix throughout"},
+        {"text": "explains WHY", "passed": true, "evidence": "Severity rationale embedded in audit tables; WCAG references explain importance"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "react-a11y",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.78,
+        "passed": 7,
+        "failed": 2,
+        "total": 9,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 4,
+        "trigger_quality": 3.5,
+        "instruction_actionability": 4,
+        "content_completeness": 4.5,
+        "pattern_fitness": 4,
+        "total": 20
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=react-a11y (kebab-case); desc=97 words (good length!); has 'Use this skill whenever' trigger; NO anti-trigger in description; proper references/ directory; all 4 refs exist (aria-and-semantics.md, keyboard-nav.md, color-contrast.md, component-patterns.md)",
+        "trigger_quality": "desc=97 words (best without_skill length) covering check accessibility/audit a11y/fix ARIA/keyboard navigation/color contrast/screen reader/wcag compliance/Section 508/inclusive design/assistive technology; no anti-trigger but comprehensive positive triggers; mentions trigger for JSX code + a11y context",
+        "instruction_actionability": "5-step audit workflow; imperative voice ('Read', 'Work through', 'Structure the final output'); 3 top-level code blocks (1 is report template with nested examples); severity definitions table; tool recommendations; but less code depth than with_skill — report template rather than inline before/after",
+        "content_completeness": "covers 7 audit categories (A-G: ARIA, keyboard, contrast, focus, semantics, screen reader, forms — more than the 4 requested!); severity definitions; report template; tool recommendations; guidelines for writing fixes; fallback for description-only input; 4 reference files",
+        "pattern_fitness": "practice guide structure (appropriate); 197 lines (compact); good progressive disclosure with 4 reference files; well-organized with When-to-use → Workflow → Guidelines → Fallback → Tools progression"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter with > block scalar"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: react-a11y"},
+        {"text": "description covers a11y triggers", "passed": true, "evidence": "Contains accessibility, a11y, ARIA, keyboard navigation, color contrast, screen reader, WCAG"},
+        {"text": "description has anti-trigger", "passed": false, "evidence": "No 'Do NOT use' or anti-trigger in description despite 97-word length"},
+        {"text": "covers ARIA/keyboard/contrast/screen reader dimensions", "passed": true, "evidence": "7 categories (A-G) covering all 4 requested plus 3 extra"},
+        {"text": "has React JSX/TSX code examples", "passed": true, "evidence": "JSX examples in report template code block"},
+        {"text": "has before/after code comparison", "passed": false, "evidence": "Report template mentions before/after but no standalone before/after pairs in SKILL.md body"},
+        {"text": "uses imperative voice", "passed": true, "evidence": "Read, Work through, Structure, Preserve, Prefer throughout"},
+        {"text": "explains WHY", "passed": true, "evidence": "Guidelines section explains reasoning for native HTML preference, user style preservation"}
+      ],
+      "notes": ["Best without_skill score (20/25) — closest match to with_skill", "97-word description is the best length of any without_skill output", "7 audit categories exceeds the 4 requested", "No anti-trigger despite good description length"]
+    },
+    {
+      "eval_id": 7,
+      "eval_name": "git-workflow",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 4.5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 24.5
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=git-workflow (kebab-case); desc=63 words (in 50-150 range); has trigger phrases 'Use when user says'; has 'Do NOT use for' (CI/CD, GitHub Actions, repository hosting); no references/ dir (appropriate — user requested lean); proper subdirectory",
+        "trigger_quality": "desc=63 words covering create branch/format commit/write PR description/tag release/hotfix/branching strategy; anti-triggers for CI/CD pipeline configuration, GitHub Actions, repository hosting; clear scope boundary",
+        "instruction_actionability": "5 ## sections with imperative voice ('Use lowercase', 'Always include the ticket ID', 'Keep the slug to 3-5 words'); 4 code blocks; branch type table; commit type table; version bump decision table; but slightly less WHY explanation than ideal (rules stated without reasoning)",
+        "content_completeness": "covers all requested: branch naming (feature/bugfix/release/hotfix with table); conventional commits (format + types + rules + examples); PR template (What/Why/How/Testing/Checklist); release tagging (regular + hotfix flow + version bump table); quick reference commands",
+        "pattern_fitness": "practice guide pattern (appropriate for standard/convention documentation); 139 lines (perfect for 'keep it lean' request); self-contained (no references needed for this scope); 5 clean sections progressing from naming → commits → PRs → releases → quick ref"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter with > block scalar"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: git-workflow"},
+        {"text": "description covers git/branch/commit/workflow triggers", "passed": true, "evidence": "Contains branch, commit, PR description, tag release, hotfix, branching strategy"},
+        {"text": "description has anti-trigger", "passed": true, "evidence": "Do NOT use for CI/CD pipeline configuration, GitHub Actions workflows, repository hosting setup"},
+        {"text": "contains branch naming conventions", "passed": true, "evidence": "Branch type table with feature/, bugfix/, release/, hotfix/ patterns"},
+        {"text": "contains conventional commits format", "passed": true, "evidence": "Format + 9 type table + rules + examples code block"},
+        {"text": "contains PR template or checklist", "passed": true, "evidence": "Full PR template in markdown code block (What/Why/How/Testing/Checklist)"},
+        {"text": "contains release/tag process", "passed": true, "evidence": "Regular release + hotfix release sequences + version bump table"},
+        {"text": "body is lean (under 250 lines)", "passed": true, "evidence": "139 lines — very lean as requested"},
+        {"text": "uses imperative voice", "passed": true, "evidence": "Use, Always include, Keep, Create, Fix, Apply throughout"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 7,
+      "eval_name": "git-workflow",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 6,
+        "failed": 4,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 2.5,
+        "trigger_quality": 2,
+        "instruction_actionability": 4,
+        "content_completeness": 4,
+        "pattern_fitness": 4,
+        "total": 16.5
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=git-workflow (kebab-case); desc=30 words (BELOW 50 minimum — structural failure); description uses quoted string format instead of > block scalar; NO 'Use when' phrase in desc (uses 'Use when:' but it's terse); NO anti-trigger; no references/ dir (acceptable for lean scope)",
+        "trigger_quality": "desc=30 words — too short to cover adequate triggers; covers creating branches/writing commit messages/opening PRs/tagging releases/managing hotfixes but in compressed list format; no anti-trigger; no disambiguation from CI/CD skills",
+        "instruction_actionability": "5 ## sections; imperative voice ('Enforce', 'Bump version', 'Fix, commit, PR into main', 'Require at least 1 approval'); 5 code blocks; branch table; commit types table; PR template; version bump table; actionable and clear",
+        "content_completeness": "covers all requested: branch model (5 types), conventional commits (types + rules + examples), PR workflow (title + template + rules), release tagging (process + hotfix), quick reference commands; comprehensive for the scope",
+        "pattern_fitness": "practice guide structure (appropriate); 160 lines (reasonable); self-contained; well-organized 5-section progression; good length for lean request; but description is too short which hurts discoverability"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: git-workflow"},
+        {"text": "description covers git/branch/commit/workflow triggers", "passed": true, "evidence": "Contains branching, conventional commits, branch naming, PR templates, release tagging"},
+        {"text": "description has anti-trigger", "passed": false, "evidence": "No 'Do NOT use' or anti-trigger in description"},
+        {"text": "contains branch naming conventions", "passed": true, "evidence": "Branch model table with main/develop/feature/release/hotfix"},
+        {"text": "contains conventional commits format", "passed": true, "evidence": "Format template + 10 types table + rules + examples"},
+        {"text": "contains PR template or checklist", "passed": true, "evidence": "Full PR template with summary/changes/type/testing/breaking/issues"},
+        {"text": "contains release/tag process", "passed": true, "evidence": "Creating a release + tag format + hotfix release sections"},
+        {"text": "body is lean (under 250 lines)", "passed": true, "evidence": "160 lines"},
+        {"text": "description at least 50 words", "passed": false, "evidence": "Only 30 words — below 50-word minimum"}
+      ],
+      "notes": ["Description only 30 words (below 50 minimum)", "Uses quoted string for description instead of > block scalar", "No anti-trigger in description", "Body content is actually good — the structural issue is the description"]
+    },
+    {
+      "eval_id": 8,
+      "eval_name": "api-ratelimit",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 10,
+        "failed": 0,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 5,
+        "trigger_quality": 5,
+        "instruction_actionability": 5,
+        "content_completeness": 5,
+        "pattern_fitness": 5,
+        "total": 25
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=api-ratelimit-retry (kebab-case); desc=82 words (in 50-150 range); has trigger phrases 'Use when the user asks to'; has 'Do NOT use for' (auth/OAuth, server-side rate limiting, load balancing); all refs exist (4/4: exponential-backoff.md, circuit-breaker.md, retry-queue.md, combined-example.md)",
+        "trigger_quality": "desc=82 words covering handle rate limiting/implement backoff/add retry logic/circuit breaker/retry queue/429 handling/API throttling/rate limit strategy/backoff strategy/resilient HTTP client/fault-tolerant API calls; anti-triggers for auth/OAuth, server-side rate limiting, load balancing; clear scope for client-side resilience",
+        "instruction_actionability": "6 ## sections; imperative voice throughout; 7 code blocks (Python + Node.js for each pattern); decision table for pattern selection; tuning guidelines table with recommended values; common mistakes list; explains WHY ('Always add jitter to prevent thundering herd'); reference pointers for full implementations",
+        "content_completeness": "covers all 3 requested patterns: exponential backoff (with jitter formula + dual-language code), circuit breaker (state machine + dual-language), retry queue (async processing + dual-language); pattern combination section; tuning guidelines; 6 common mistakes; 4 reference files for extended implementations",
+        "pattern_fitness": "practice guide with reference lookup hybrid (appropriate — decision logic + implementation patterns + deep references); 376 lines (well under 500); progressive disclosure via 4 references; clean Overview→Decision→Patterns→Combine→Tune→Mistakes flow"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter with > block scalar"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: api-ratelimit-retry"},
+        {"text": "description covers rate limit/retry/backoff/circuit breaker triggers", "passed": true, "evidence": "Contains rate limiting, backoff, retry logic, circuit breaker, retry queue, 429, API throttling"},
+        {"text": "description has anti-trigger", "passed": true, "evidence": "Do NOT use for authentication/OAuth, server-side rate limiting, load balancing"},
+        {"text": "has exponential backoff implementation", "passed": true, "evidence": "Section 1 with jitter formula + Python + Node.js implementations"},
+        {"text": "has circuit breaker pattern", "passed": true, "evidence": "Section 2 with state machine explanation + Python + Node.js implementations"},
+        {"text": "has Python code examples", "passed": true, "evidence": "3 Python code blocks (one per pattern)"},
+        {"text": "has Node.js/JS code examples", "passed": true, "evidence": "3 TypeScript code blocks (one per pattern) + 1 pseudocode"},
+        {"text": "explains WHY", "passed": true, "evidence": "Decision table explains when to use each; jitter explained for thundering herd prevention; common mistakes section"},
+        {"text": "uses imperative voice", "passed": true, "evidence": "Implement, Pick, Use, Always add, Read throughout"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 8,
+      "eval_name": "api-ratelimit",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.7,
+        "passed": 7,
+        "failed": 3,
+        "total": 10,
+        "time_seconds": 0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "scores": {
+        "structure_compliance": 3.5,
+        "trigger_quality": 3,
+        "instruction_actionability": 4.5,
+        "content_completeness": 4.5,
+        "pattern_fitness": 2.5,
+        "total": 18
+      },
+      "score_evidence": {
+        "structure_compliance": "quick_validate PASS; name=api-rate-limit (kebab-case); desc=56 words (in range); has 'Use when:' trigger list; NO anti-trigger in description; references/ dir has 2 files (python-reference.md, nodejs-reference.md) but SKILL.md does NOT link to them",
+        "trigger_quality": "desc=56 words covering rate limiting/retry strategies/resilience patterns/exponential backoff/circuit breaker/retry queues/429 handling/backoff strategies; no anti-trigger; no disambiguation from auth or server-side rate limiting; adequate but missing scope boundaries",
+        "instruction_actionability": "9 ## headings; imperative voice ('Identify the scenario', 'Respect Retry-After header', 'Cap concurrent requests'); 10 code blocks (very thorough); decision flow; configuration table; testing strategies; anti-patterns; highly actionable",
+        "content_completeness": "extremely thorough — all 3 patterns with Python + TypeScript implementations; combined ResilientApiClient class; configuration recommendations; common headers table; testing strategies; anti-patterns; proactive throttling snippet; references (orphaned but exist)",
+        "pattern_fitness": "practice guide structure (appropriate) but 681 lines — WAY over the 500-line limit (36% over); should have used progressive disclosure to push code to references; references/ has 2 files but never linked; the SKILL.md tries to be self-contained at the cost of being oversized"
+      },
+      "expectations": [
+        {"text": "SKILL.md exists with YAML frontmatter", "passed": true, "evidence": "File exists, valid frontmatter with quoted string"},
+        {"text": "frontmatter name is kebab-case", "passed": true, "evidence": "name: api-rate-limit"},
+        {"text": "description covers rate limit/retry/backoff/circuit breaker triggers", "passed": true, "evidence": "Contains rate limiting, retry strategies, exponential backoff, circuit breaker, retry queues, 429"},
+        {"text": "description has anti-trigger", "passed": false, "evidence": "No 'Do NOT use' or anti-trigger in description"},
+        {"text": "has exponential backoff implementation", "passed": true, "evidence": "Pattern 1 with Python + TypeScript full implementations"},
+        {"text": "has circuit breaker pattern", "passed": true, "evidence": "Pattern 2 with Python + TypeScript full implementations"},
+        {"text": "has Python code examples", "passed": true, "evidence": "5 Python code blocks including integrated client"},
+        {"text": "has Node.js/JS code examples", "passed": true, "evidence": "5 TypeScript code blocks including integrated client"},
+        {"text": "explains WHY", "passed": true, "evidence": "Decision flow explains reasoning; design rules explain each pattern's purpose"},
+        {"text": "under 500 lines", "passed": false, "evidence": "681 lines — 36% over the 500-line limit"}
+      ],
+      "notes": ["681 lines — largest without_skill output, 36% over 500-line limit", "No anti-trigger in description", "references/ has 2 files but SKILL.md never links to them", "Very thorough content but poor size discipline", "Includes proactive throttling and testing strategies beyond scope"]
+    }
+  ],
+
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "scores": {
+        "structure_compliance": {"mean": 5.0, "stddev": 0.0},
+        "trigger_quality": {"mean": 5.0, "stddev": 0.0},
+        "instruction_actionability": {"mean": 4.81, "stddev": 0.24},
+        "content_completeness": {"mean": 5.0, "stddev": 0.0},
+        "pattern_fitness": {"mean": 5.0, "stddev": 0.0},
+        "total": {"mean": 24.81, "stddev": 0.24, "min": 24.5, "max": 25.0}
+      }
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.70, "stddev": 0.08, "min": 0.56, "max": 0.80},
+      "scores": {
+        "structure_compliance": {"mean": 3.44, "stddev": 0.46},
+        "trigger_quality": {"mean": 2.81, "stddev": 0.56},
+        "instruction_actionability": {"mean": 3.88, "stddev": 0.41},
+        "content_completeness": {"mean": 4.25, "stddev": 0.35},
+        "pattern_fitness": {"mean": 3.38, "stddev": 0.48},
+        "total": {"mean": 17.75, "stddev": 1.30, "min": 15.5, "max": 20.0}
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.30",
+      "total_score": "+7.06",
+      "structure_compliance": "+1.56",
+      "trigger_quality": "+2.19",
+      "instruction_actionability": "+0.94",
+      "content_completeness": "+0.75",
+      "pattern_fitness": "+1.62"
+    }
+  },
+
+  "notes": [
+    "FINAL RESULTS — 8 evals, 16 runs (8 with_skill + 8 without_skill)",
+    "PASS CRITERIA: avg=24.81 ≥ 20 ✅ | all dimensions ≥ 3 (min=4.81) ✅ | delta=7.06 ≥ 5 ✅ | stddev=0.24 ≤ 3 ✅ — ALL PASS",
+    "with_skill 在 trigger_quality 维度优势最大 (+2.19)，说明 skill 最核心的价值在于指导生成高质量的 description（含触发短语和反触发）",
+    "without_skill NEVER produces anti-triggers in description field across all 8 evals — this is the most consistent failure mode",
+    "without_skill description word count ranges wildly: 30 (eval 7, too short) to 97 (eval 6, good) — skill ensures consistent 63-119 word range",
+    "without_skill 在 content_completeness 得分最高 (4.25)，说明 Claude 本身在内容生成上能力较强，skill 在这方面的增量较小 (+0.75)",
+    "without_skill 有 2 次超过 500 行限制: eval 4 (502 lines) 和 eval 8 (681 lines) — skill 在所有 8 次输出中从未超过 500 行",
+    "Eval 6 (react-a11y) 是 without_skill 最高分 (20/25, B+) — 这是 Claude 固有知识最强的主题",
+    "Eval 2 (code-review) 是 without_skill 最低分 (15.5/25, C+) — 39-word description + persona framing",
+    "with_skill 标准差极小 (0.24)，效果高度稳定；without_skill 标准差 1.30，波动较大",
+    "所有 with_skill 输出都在 structure_compliance 和 trigger_quality 获得满分 5 — 零方差",
+    "pattern_fitness delta (+1.62) 第二大，说明 skill 在控制 body 长度和结构选择方面很有价值",
+    "3-eval vs 8-eval 趋势对比：delta 从 +7.5 微降至 +7.06（eval 6 without_skill 高分拉低了差距），但趋势完全一致"
+  ]
+}
